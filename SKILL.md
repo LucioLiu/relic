@@ -1,26 +1,32 @@
 ---
 name: relic
-description: "Relic Soul Chip — Persistent AI personality and memory across agents. Zero deps, pure Markdown files. Inspired by Cyberpunk 2077."
-version: "0.1.0"
+description: "Relic Soul Chip — Give your AI agent a persistent personality and memory across sessions. Pure Markdown, human-readable. Switch agents, keep the soul."
+version: "0.1.1"
 author: LucioLiu
 license: GPL-3.0
 homepage: "https://github.com/LucioLiu/relic"
-platforms: [macos, linux, windows]
+compatibility:
+  - "File-reading agent (any platform)"
+  - "Requires: git (for clone install only), filesystem read/write in designated Relic directory"
+allowed-tools:
+  - "Read"
+  - "Write"
+  - "Bash(git clone:*)"
 metadata:
   hermes:
-    tags: [Personality, Memory, Persistence, Cross-Agent, Identity, AI-Soul, Agent-Memory, Markdown, User-Preferences]
+    tags: [Personality, Memory, Cross-Agent, Identity, AI-Soul, Agent-Memory, Markdown, User-Preferences]
     related_skills: []
     requires_toolsets: []
+    requires_binaries: ["git"]
+    filesystem_scope:
+      read: ["~/relic/brain/"]
+      write: ["~/relic/brain/MEMORY.md", "~/relic/brain/SESSIONS/", "~/relic/brain/ARCHIVE/"]
 
 ---
 
 # ⚡ Relic Soul Chip
 
-Give your AI agent a persistent personality and memory that survives sessions and follows the user across different agents. Zero dependencies. Pure Markdown. Human-readable.
-
-## What Relic Does
-
-Relic stores an AI's soul (personality + mission), user profile, and memories in plain Markdown files. Any agent that can read files can connect — OpenClaw, Hermes, Claude Code, Cursor, or any future agent.
+Give your AI agent a persistent personality and memory that survives sessions and follows the user across different agents. Pure Markdown. Human-readable.
 
 **Switch agents. Keep the soul.**
 
@@ -31,32 +37,35 @@ Relic stores an AI's soul (personality + mission), user profile, and memories in
 - User switches agents and wants continuity
 - Boot sequence (every session if Relic is set up)
 
-## Verification
+## Requirements
 
-Check that:
-1. SOUL.md and USER.md exist and are filled in
-2. Agent can answer "What's my AI's name? What's my name?"
-3. Agent reads Relic files at the start of every session
+| Requirement | Purpose | Optional |
+|-------------|---------|----------|
+| `git` | Clone the Relic repo during install | Yes (can manually download) |
+| Filesystem read | Read SOUL.md, USER.md, MEMORY.md | No |
+| Filesystem write | Append to MEMORY.md, write session logs | No |
+| Agent config modify | Plant "neural anchor" for auto-loading | Yes (user can skip) |
+
+All operations are confined to `~/relic/brain/` (or user-specified directory). No access outside this directory except optional one-time config modification.
 
 ## Steps
 
 ### First-time Setup
 
-1. Clone Relic: `git clone https://github.com/LucioLiu/relic.git ~/relic`
+1. Install Relic: `git clone https://github.com/LucioLiu/relic.git ~/relic`
 2. Read the full protocol: `~/relic/brain/PROTOCOL.md`
 3. Copy templates to active files (SOUL.md, USER.md, MEMORY.md)
 4. Help user fill in SOUL.md (AI name + core mission) and USER.md (user preferences)
-5. Plant neural anchor in your config (see PROTOCOL.md Section 9)
-6. Verify setup works
+5. **Neural anchor (optional):** Ask user if they want to add a startup reference to their agent config. If yes, show exactly what will be appended, get confirmation, then append. Do not modify existing config content.
+6. Verify: ask "What's my AI's name? What's my name?" — both must be correct
 
 ### Every Session (Boot Sequence)
 
-1. Check SESSIONS/ for missed logs → backfill if needed
-2. Read SOUL.md → load personality
-3. Read USER.md → load user preferences
-4. Read MEMORY.md → load recent events
-5. Sync new memories from Relic to your own memory file
-6. Work normally, appending new memories
+1. Read SOUL.md → load personality
+2. Read USER.md → load user preferences
+3. Read MEMORY.md → load recent events (last 30 entries)
+4. Sync new memories from Relic to your own memory (if supported)
+5. Work normally, appending new memories
 
 ### Memory Writing
 
@@ -71,12 +80,24 @@ Importance: high / medium / low
 
 The user's soul lives in `~/relic/brain/`. The new agent reads the same files and follows PROTOCOL.md Scenario B (Inject).
 
+## Security & Privacy
+
+- **Scoped access**: All read/write confined to `~/relic/brain/`. No outside access.
+- **SOUL.md/USER.md**: Read-only after setup. Only user can edit directly.
+- **Sensitive data**: MUST show user what will be recorded and get explicit confirmation before recording names, emails, phone numbers, addresses, API keys, passwords. Allow user to redact or skip.
+- **No network access after install**: All operations local. No API calls, no telemetry, no data transmission.
+- **Neural anchor transparency**: Show user exact text before appending to agent config.
+- **Append-only audit trail**: MEMORY.md entries are timestamped and never deleted.
+
 ## Rules
 
-- 🔴 NEVER modify SOUL.md or USER.md
+- 🔴 NEVER modify SOUL.md or USER.md (read-only after setup)
 - 🟡 ONLY APPEND to MEMORY.md
 - 🔴 NEVER delete SESSIONS/ or ARCHIVE/
-- ⚠️ Ask before recording sensitive info
+- 🔴 NEVER access files outside ~/relic/brain/ (except optional config modification)
+- 🔴 NEVER transmit, upload, or share user data
+- ⚠️ ALWAYS ask before recording sensitive info — show, confirm, allow redact
+- ⚠️ ALWAYS ask before modifying agent config — show exact text, get confirmation
 
 ## Full Documentation
 
@@ -85,3 +106,5 @@ Read `~/relic/brain/PROTOCOL.md` for the complete protocol including:
 - Memory consolidation when files get large
 - Bidirectional sync between Relic and agent memories
 - Session recording guidelines
+
+Source: https://github.com/LucioLiu/relic
