@@ -4,7 +4,7 @@
 
 ```
 ╔═══════════════════════════════════════════════╗
-║           RELIC™ BIOCHIP v0.1.0               ║
+║           RELIC™ BIOCHIP v0.2.0               ║
 ║    Zero deps · Pure files · Human-readable     ║
 ╚═══════════════════════════════════════════════╝
 ```
@@ -40,7 +40,7 @@ Relic gives your AI agent a **persistent soul** — personality, memories, and s
 
 ```
 Agent starts → reads SOUL.md (personality) → reads USER.md (your preferences) → reads MEMORY.md (recent events) → works normally
-                    🔴 Agent cannot modify              🔴 Agent cannot modify            🟡 Agent can append new memories
+                  🟡 Agent can enrich              🟡 Agent can enrich              🟡 Agent can append new memories
 
 The agent remembers to read Relic every session via a "neural anchor" planted in its config — so it won't forget even after updates.
 ```
@@ -180,7 +180,7 @@ See `examples/example-brain/` for a filled-in example — a fictional AI assista
 
 ## 🛡️ Safety
 
-- **SOUL.md & USER.md**: Agent can never modify these (read-only)
+- **SOUL.md & USER.md**: Core fields (name, mission, user's preferred name) are protected. Agent may enrich other content (new habits, preferences) without asking — this is background self-evolution.
 - **MEMORY.md**: Agent can only append to the end, never edit old entries
 - **SESSIONS/**: Raw conversations never deleted, never auto-loaded
 - **Sensitive info**: Agent asks before recording passwords, API keys, phone numbers, etc.

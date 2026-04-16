@@ -31,7 +31,7 @@ Relic 芯片 = 灵魂 + 记忆 + 技能
 如果你是第一次接入 Relic（SOUL.md 等文件还不存在），按以下步骤操作：
 If this is your first time connecting (SOUL.md etc. don't exist yet):
 
-💡 文件大小建议：SOUL.md 控制在 50 行以内，USER.md 控制在 30 行以内。太小不够用，太大浪费 token。
+💡 文件大小由义体根据自身上下文窗口自行判断，无需人为限制。精度最重要——宁多勿缺。
 
 ```
 1. 复制模板为正式文件 / Copy templates to active files:
@@ -119,20 +119,27 @@ Relic MEMORY.md = 所有义体的记忆交汇点（只加不减）
 ```
 步骤0：版本检查 / Version Check（每次对话只执行一次）
   → 读取 brain/.relic-version 获取本地版本号
-  → 访问 https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version 获取最新版本号
-  → 如果网络不通，静默跳过，不打扰用户
+  → 用 HTTP 请求（web fetch / curl / wget，不是文件读取）访问 https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version 获取最新版本号
+  ⚠️ 必须用网络请求工具，不能把 URL 当本地路径去读。如果工具不支持网络请求，跳过版本检查并告诉用户"我无法检查更新"
+  → 如果网络请求失败，告诉用户"⚠️ 无法检查 Relic 版本更新（网络不可达）"
   → 版本一致？静默继续，执行步骤1
   → 版本不一致？询问用户：
     "发现 Relic 新版本（当前 vX.X.X → 最新 vY.Y.Y）。是否更新？
      更新只会替换协议和模板文件，你的 SOUL.md、USER.md、MEMORY.md 不会被改动。"
     → 用户同意：执行 cd ~/relic && git pull 或 bash update.sh
-    → 用户拒绝：记住本次拒绝，本次对话不再询问
+     → 用户拒绝：记住本次拒绝，本次对话不再询问
   ⚠️ 绝不强制更新。更新必须经过用户确认。
+
+  → 版本更新后的文件迁移：
+    如果新版本改了文件名或目录结构（比如 MEMORY.md 改名了），协议会在 .relic-version 旁边附带一个 MIGRATE.md 说明文件。
+    义体在版本更新后检查：如果 MIGRATE.md 存在，按照里面的指令迁移用户文件。
+    迁移原则：旧文件不删除（移到 ARCHIVE/），新文件从旧文件内容生成。
+    如果没有 MIGRATE.md，说明没有需要迁移的文件结构变更。
 
 步骤1：检查同步 / Sync Check（最重要！）
   → 查看 SESSIONS/ 目录，对比本义体的上次对话记录
   → 如果 SESSIONS/ 中不存在任何对话文件（首次使用），跳过此步骤
-  → 「对话文件」= 文件名匹配 YYYY-MM-DD.*.md 的文件，README.md 不算
+  → 「对话文件」= SESSIONS/ 下所有 .md 文件（任何命名格式），README.md 不算
   → 如果发现遗漏且当前上下文中仍有遗漏的对话内容：立即补充
   → 如果遗漏的对话已不在当前上下文中：提醒用户"上次对话未被记录，建议手动提醒我补充"
   → 对话是底层矿石，丢了就没了
@@ -397,10 +404,11 @@ needs:
 如果旧义体没有持久化对话的机制（大多数 Agent 没有），跳过此步。
 
 把旧义体的历史对话和工作日志复制到 SESSIONS/：
-- 按日期组织：SESSIONS/YYYY-MM/YYYY-MM-DD.[义体名].md
-- ⚠️ 无论原文件名是什么，导入时必须重命名为标准格式（YYYY-MM-DD.[义体名].md）
-  例如原文件 2026-04-08.md → 2026-04-08.OpenClaw-常.md
-  如果同一天有多个文件，合并到同一个标准文件中
+- 按月份组织：SESSIONS/YYYY-MM/ 目录下
+- 文件名格式参考：YYYY-MM-DD.[义体名].md（推荐但不强求）
+- 如果原文件名已经是清晰的日期格式（如 2026-04-08.md、2026-04-08-常.md），直接保留原名即可
+- 如果原文件名不含日期（如 memory.md、chat-log.md），重命名为含日期的格式
+- 同一天的多个文件可以合并也可以保留，取决于内容是否关联
 - 如果原始文件是多个小文件（如每天一个），直接复制并重命名
 - 如果原始文件是一个大文件，按日期拆分后复制
 - ⚠️ 这些是底层矿石，原始内容不要改、不要摘要
@@ -472,6 +480,22 @@ needs:
 
 5. 更新各目录的 README：如果目录不再为空，移除"📭 空的正常"提示
 ```
+
+### 文件映射说明 / File Mapping
+
+Relic 的文件和义体的文件不是简单的 1:1 映射：
+
+**一对多（一个 Relic 文件 → 多个义体文件）**
+- 一个 Relic MEMORY.md 可能对应多个义体的记忆文件（OpenClaw 的 memory/、Claude Code 的 CLAUDE.md 等）
+- 一个 Relic SKILLS/ 可能对应义体的多个技能条目
+- 同步时：Relic 是汇总点，每个义体从 Relic 拿自己缺的，也给 Relic 自己有的
+
+**多对一（多个 Relic 文件 → 一个义体文件）**
+- Relic 的 SOUL.md + USER.md 可能要合并写入义体的同一个配置文件（如 AGENTS.md 或 system prompt）
+- Relic 的多个 SKILLS/*.md 可能要合并成义体的一个技能列表
+- 导入时：义体需要判断哪些 Relic 文件应该合并、哪些应该分开存储
+
+**核心原则**：Relic 按"功能"组织（灵魂、用户、记忆、技能），义体按"平台"组织。映射关系由义体在同步时自行判断。
 
 ### 场景 B：注入 / Inject（有 Relic + 空义体）
 
@@ -614,7 +638,7 @@ SESSIONS/ 永不整理。/ SESSIONS/ are never consolidated.
 ## 八、对话记录 / Session Recording
 
 每次对话结束时，义体将完整对话追加到：
-`SESSIONS/YYYY-MM/YYYY-MM-DD.[义体名].md`
+`SESSIONS/YYYY-MM/YYYY-MM-DD.[义体名].md`（推荐格式，但如果义体习惯用自己的命名方式也可以保留）
 
 ⚠️ 如果 `SESSIONS/YYYY-MM/` 目录不存在，先创建它再写入。
 尽量完整保存，不主动摘要，保留用户原话和关键决策。
@@ -678,6 +702,14 @@ Short chats (<5 turns) with no substance can be skipped.
 读取 [brain路径]/PROTOCOL.md 第二节，只执行「轻量模式」标注的步骤。
 SOUL.md 只读核心使命段，USER.md 只读沟通偏好段，MEMORY.md 只读最后 5 条。
 ```
+
+### 首次 vs 日常读取策略 / First-time vs Daily Reading
+
+**首次连接**：从头到尾读完整 PROTOCOL.md（你正在做的事情）。首次慢一点没关系，理解规则比速度重要。
+
+**日常启动**：只需要执行第二节「启动流程」。不需要重读整个协议——你已经在首次连接时理解了规则。
+
+**协议更新后**：如果版本检查发现新版本，更新后建议重读变更的部分（git diff 或重新浏览）。
 
 ### 锚点设计原则 / Anchor Design Principles
 

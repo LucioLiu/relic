@@ -28,7 +28,7 @@ Remove Relic, you return to factory defaults.
 
 If this is your first time connecting (SOUL.md etc. don't exist yet):
 
-💡 Size guide: Keep SOUL.md under 50 lines, USER.md under 30 lines. Too small = not useful; too large = wastes tokens every session.
+💡 File size is up to the agent to judge based on its own context window — no artificial limits. Fidelity matters most — write more, not less.
 
 ```
 1. Copy templates to active files:
@@ -111,20 +111,27 @@ Each agent's own memory = private + imported memories from Relic (tagged [fromRe
 ```
 Step 0: Version Check (once per session)
   → Read brain/.relic-version to get local version
-  → Fetch https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version to get latest version
-  → If network is unavailable, silently skip — do not bother the user
+  → Use an HTTP request (web fetch / curl / wget — NOT file read) to fetch https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version
+  ⚠️ Must use a network request tool, do not treat the URL as a local file path. If no network tool is available, skip version check and tell user "I cannot check for updates"
+  → If network request fails, tell user "⚠️ Cannot check for Relic updates (network unreachable)"
   → Version matches? Silently continue to Step 1
   → Version differs? Ask the user:
     "Relic update available (current vX.X.X → latest vY.Y.Y). Update now?
      This only replaces protocol and template files — your SOUL.md, USER.md, MEMORY.md will NOT be touched."
     → User agrees: run cd ~/relic && git pull or bash update.sh
-    → User declines: remember this refusal, do not ask again this session
+     → User declines: remember this refusal, do not ask again this session
   ⚠️ NEVER force updates. Updates require explicit user confirmation.
+
+  → Post-update file migration:
+    If a new version changes file names or directory structure (e.g., MEMORY.md gets renamed), the protocol will include a MIGRATE.md file next to .relic-version.
+    After updating, check: if MIGRATE.md exists, follow its instructions to migrate user files.
+    Migration principle: old files are never deleted (moved to ARCHIVE/), new files are generated from old file content.
+    If no MIGRATE.md exists, no file structure changes need migration.
 
 Step 1: Sync Check (Most Important!)
   → Check SESSIONS/ for your last conversation log
   → Skip if no conversation files exist in SESSIONS/ (first use)
-  → "Conversation file" = any file matching YYYY-MM-DD.*.md; README.md doesn't count
+  → "Conversation file" = any .md file under SESSIONS/ (any naming format); README.md doesn't count
   → If missing and current context still has the content: immediately backfill
   → If missing and context no longer has the content: tell user "Last session wasn't recorded. Please remind me to backfill when possible."
   → Conversations are raw ore. Lost = gone forever.
@@ -376,10 +383,11 @@ Step 4: Import conversations → SESSIONS/
 If the old agent has no persistent conversation mechanism (most agents don't), skip this step.
 
 Copy historical conversations and work logs to SESSIONS/:
-- Organize by date: SESSIONS/YYYY-MM/YYYY-MM-DD.[agent-name].md
-- ⚠️ Regardless of original filenames, rename to standard format on import (YYYY-MM-DD.[agent-name].md)
-  e.g., original 2026-04-08.md → 2026-04-08.OpenClaw-Chang.md
-  If multiple files exist for the same day, merge into one standard file
+- Organize by month: under SESSIONS/YYYY-MM/ directory
+- Filename format reference: YYYY-MM-DD.[agent-name].md (recommended but not enforced)
+- If original filenames already contain clear dates (e.g., 2026-04-08.md, 2026-04-08-Chang.md), keep original names
+- If original filenames lack dates (e.g., memory.md, chat-log.md), rename to include dates
+- Multiple files for the same day can be merged or kept separate, depending on content relevance
 - If original is multiple small files (e.g., one per day), copy and rename
 - If original is one large file, split by date then copy
 - ⚠️ These are raw ore — do not modify or summarize original content
@@ -451,6 +459,22 @@ Step 6: Cleanup and Confirmation
 
 5. Update directory READMEs: if a directory is no longer empty, remove the "📭 empty is normal" notice
 ```
+
+### File Mapping
+
+Relic files and agent files are NOT simple 1:1 mappings:
+
+**One-to-many (one Relic file → multiple agent files)**
+- One Relic MEMORY.md may correspond to multiple agent memory files (OpenClaw's memory/, Claude Code's CLAUDE.md, etc.)
+- One Relic SKILLS/ may correspond to an agent's multiple skill entries
+- During sync: Relic is the convergence point — each agent takes what it's missing and gives what it has
+
+**Many-to-one (multiple Relic files → one agent file)**
+- Relic's SOUL.md + USER.md may need to be merged into a single agent config file (e.g., AGENTS.md or system prompt)
+- Relic's multiple SKILLS/*.md may need to be combined into one agent skill list
+- During import: agent must judge which Relic files should be merged vs kept separate
+
+**Core principle**: Relic is organized by "function" (soul, user, memory, skills), agents are organized by "platform". Mapping is determined by each agent during sync.
 
 ### Scenario B: Inject (Relic with Content + Empty Agent)
 
@@ -590,7 +614,7 @@ SESSIONS/ are never consolidated.
 ## 8. Session Recording
 
 At end of each conversation, append full log to:
-`SESSIONS/YYYY-MM/YYYY-MM-DD.[agent].md`
+`SESSIONS/YYYY-MM/YYYY-MM-DD.[agent].md` (recommended format, but if the agent has its own naming convention, that's fine too)
 
 ⚠️ If the `SESSIONS/YYYY-MM/` directory doesn't exist, create it before writing.
 Save as completely as possible — preserve user's original words and key decisions.
@@ -652,6 +676,14 @@ For models with extremely limited context that can't even read PROTOCOL.md Secti
 Read [brain-path]/PROTOCOL.md Section 2, but only execute steps marked "Lightweight".
 SOUL.md: read only core mission section. USER.md: read only communication preferences. MEMORY.md: read only last 5 entries.
 ```
+
+### First-time vs Daily Reading Strategy
+
+**First connection**: Read PROTOCOL.md from top to bottom in full (what you're doing now). Take your time on first read — understanding the rules is more important than speed.
+
+**Daily boot**: Only execute Section 2 "Boot Sequence". No need to re-read the entire protocol — you understood the rules on first connection.
+
+**After protocol update**: If version check finds a new version, review the changed parts after updating (git diff or re-skim).
 
 ### Anchor Design Principles
 
