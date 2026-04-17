@@ -18,44 +18,57 @@ description: "One soul, many agents. Persistent AI personality and cross-agent m
 
 ## Quick Install
 
-If Relic is not yet installed on this machine:
+If Relic is not yet installed on this machine, set it up in a stable location.
 
+**Option A: Install via git clone**
 ```bash
 git clone https://github.com/LucioLiu/relic.git ~/relic
 ```
 
-If `git` is not available, download and extract `https://github.com/LucioLiu/relic/archive/refs/heads/main.zip` to `~/relic/`.
+**Option B: If installed as an agent skill** (e.g., via ClawHub), the skill files are in a skill directory (e.g., `~/.openclaw/workspace/skills/relic-soul-chip/`). You must copy the full `brain/` contents to a user-accessible location:
+
+```bash
+mkdir -p ~/relic/brain
+cp -r [skill-directory]/brain/* ~/relic/brain/
+```
+
+> ⚠️ **CRITICAL**: Whether Option A or B, the result must be a complete `~/relic/brain/` directory containing: `PROTOCOL.md`, `PROTOCOL.en.md`, `SOUL.template.md`, `USER.template.md`, `MEMORY.template.md`, `.relic-version`, and subdirectories `SKILLS/`, `PROJECTS/`, `SESSIONS/`, `ARCHIVE/`, `INBOX/`. If any files are missing, the next agent won't have the protocol to read.
+
+**Tell the user**: "I've set up Relic at `~/relic/brain/`. Other agents will need this path to connect."
 
 ## First-time Setup
 
 **Do this automatically when the user asks to set up Relic. Walk them through each step.**
 
-1. Check if `~/relic/brain/PROTOCOL.md` exists. If not, run the Quick Install above.
+1. **Verify setup completeness**: Check `~/relic/brain/PROTOCOL.md` exists and is readable. If files are missing, copy from skill directory or re-clone. Do NOT proceed with broken setup.
 2. Read `~/relic/brain/PROTOCOL.md` Section 0 (First-time Setup) and follow all steps.
 3. Copy templates: `SOUL.template.md` → `SOUL.md`, `USER.template.md` → `USER.md`, `MEMORY.template.md` → `MEMORY.md`
 4. Ask the user: "What should your AI be called? What's its personality?" → Fill in `SOUL.md`
 5. Ask the user: "What should your AI call you? Any preferences?" → Fill in `USER.md`
-6. Verify: ask "What's your AI's name? What's your name?" — both answers must match what was written.
-7. (Optional) Ask if the user wants the agent to auto-load Relic on every session. If yes, show the exact anchor text, get explicit confirmation, then append to agent config. Tell user they can disable Relic at any time by deleting the anchor text.
+6. Verify: ask "What's your AI's name? What's your name?" — both must match.
+7. (Optional) Ask if user wants auto-load. If yes, show exact anchor text, get confirmation, append. Tell user they can disable by deleting the anchor.
+8. **Tell the user the path**: "Relic is ready at `~/relic/brain/`. To connect other agents, tell them to read `~/relic/brain/PROTOCOL.md`." 
 
 ## Every Session (Boot Sequence)
 
 1. **Version check** (once per session): Read `~/relic/brain/.relic-version`, compare with `https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version`. If newer version exists, ask user "Relic update available (vX.X.X → vY.Y.Y). Update now? Your personal files won't be touched." If user agrees, run `cd ~/relic && git pull`. If network request fails, tell user: Cannot check for Relic updates (network unreachable). Never force updates.
 2. Read `~/relic/brain/SOUL.md` → load personality
 3. Read `~/relic/brain/USER.md` → load user preferences
-4. Read `~/relic/brain/MEMORY.md` → load all entries. Priority: high importance first, then medium, then low. Recent mood entries are read naturally — enabling cross-agent emotion transfer.
+4. Read `~/relic/brain/MEMORY.md` → load all entries (organized by topic, not by date). Recent mood entries carry emotional context naturally.
 5. Work normally, appending new memories as needed
 
 ## Memory Writing
 
-Append to `~/relic/brain/MEMORY.md` with this format:
+Append to `~/relic/brain/MEMORY.md`. **Organize by topic, NOT by date.**
 
 ```
-## YYYY-MM-DD HH:MM [AgentName]
-Content: [what happened]
+## Topic (e.g., "Work Habits", "Tech Preferences", "Key Decisions")
+Content: [memory content, preserve original wording]
 Type: preference / decision / experience / event / correction / mood
 Importance: high / medium / low
 ```
+
+Multiple entries on the same topic go under the same ## heading. Dates are just timestamp attributes, not the organizing principle. Exception: birthdays, anniversaries.
 
 ## Switching Agents
 

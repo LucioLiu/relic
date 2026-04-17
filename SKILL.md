@@ -65,17 +65,19 @@ All file operations are confined to `~/relic/brain/` (or user-specified director
 1. **Version check** (once per session): Read `~/relic/brain/.relic-version`, compare with `https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version`. If newer version exists, ask user if they want to update. If user agrees, run `cd ~/relic && git pull`. Never force updates.
 2. Read SOUL.md → load personality
 3. Read USER.md → load user preferences
-4. Read MEMORY.md → load all entries, priority: high importance first
+4. Read MEMORY.md → load all entries, organized by topic (not by date)
 5. Sync new memories from Relic to your own memory (if supported)
 6. Work normally, appending new memories
 
 ### Memory Writing
 
 ```
-## YYYY-MM-DD HH:MM [AgentName]
-Content: [what happened]
+## Topic (e.g., "Work Habits", "Tech Preferences")
+Content: [memory content, preserve original wording]
 Type: preference / decision / experience / event / correction / mood
 Importance: high / medium / low
+
+Organize by TOPIC, not by date. Dates are just timestamps, not the structure.
 ```
 
 ### Switching to Another Agent

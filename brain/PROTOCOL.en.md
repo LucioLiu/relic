@@ -104,6 +104,19 @@ Each agent's own memory = private + imported memories from Relic (tagged [fromRe
 
 * SESSIONS can be temporarily written to during Scenario A import; reverts to read-only after import.
 
+### SESSIONS vs ARCHIVE Distinction
+
+An agent's old files may contain a mix of conversations and notes. Classification rules:
+
+| Content type | Destination | Reason |
+|-------------|-------------|--------|
+| Pure raw conversations/work logs | SESSIONS/ | Raw ore, keep as-is |
+| Pure notes/summaries/organized content | ARCHIVE/raw/ | Already processed, not raw |
+| Mixed content (both conversation and notes) | ARCHIVE/raw/ | When unsure, default to ARCHIVE — SESSIONS is only for confirmed raw records |
+| Pure skill/methodology docs | SKILLS/ | Process as skills, not SESSIONS/ARCHIVE |
+
+**Principle**: SESSIONS is "raw ore" — original content never processed by anyone. Anything that has been summarized, condensed, or organized is NOT raw ore — put it in ARCHIVE. When in doubt, ARCHIVE.
+
 ---
 
 ## 2. Boot Sequence (Every Session)
@@ -223,14 +236,33 @@ Extra Rules:
 
 ### Writing to Relic
 
-When you discover noteworthy information during work, append to MEMORY.md:
+When you discover noteworthy information during work, append to MEMORY.md.
+
+⚠️ **Core principle: organize by topic, NOT by date.**
+
+Long-term memory is a collection of habits, preferences, decisions, and experiences — not a diary. Dates are just a timestamp attribute (when discovered), not the organizing principle.
 
 ```markdown
-## YYYY-MM-DD HH:MM [Agent Name]
-Content: [memory content]
+## Topic (e.g., "Work Habits", "Tech Preferences", "Key Decisions", "Lessons Learned")
+Content: [memory content, preserve original wording]
 Type: preference / decision / experience / event / correction / mood
 Importance: high / medium / low
 ```
+
+Multiple entries under the same topic go under the same ## heading:
+```markdown
+## Work Habits
+
+Content: User works late at night, don't remind them to sleep
+Type: preference
+Importance: high
+
+Content: User prefers MVP-first approach, then iterate
+Type: preference
+Importance: medium
+```
+
+Exception: Special date entries (birthdays, anniversaries) may use dates as ## headings.
 
 ### Memory Types and Fidelity
 
@@ -373,8 +405,21 @@ Evaluate each skill from the old agent:
 - ❌ Skip: agent-platform-specific tools (e.g., a specific agent's browser plugin, platform API tools)
 - 🤔 Unsure: ask the user
 
-Judgment criteria: "Can this skill work without the original platform?" Yes → bring it. No → skip it.
-If the skill contains platform-specific content (e.g., specific tool calls, specific directory structures), remove the platform-specific parts and keep only the generic methodology.
+Judgment criteria — distinguish two types of skills:
+
+**Methodology skills** (bring): Pure docs/steps/methodology, no runtime dependency
+  ✅ Work habits (debugging workflows, writing style, self-improvement methodology)
+  ✅ User-defined templates (weekly report format, project process)
+  ✅ Judgment rules (skill review criteria, code review checklist)
+  Test: Take the .md file to another computer and read it. Can you follow it? Yes → bring
+
+**Tool skills** (skip): Depend on a specific runtime/environment/toolchain
+  ❌ Scripts requiring Python/Node runtime
+  ❌ Tools depending on specific APIs/SDKs
+  ❌ Platform-specific features (e.g., OpenClaw browser plugins, Claude MCP tools)
+  Test: Remove the runtime environment — does it still work? No → skip. But write a methodology summary in memory.
+
+If a skill contains both (methodology + tool code), bring only the methodology part, skip the tool code.
 
 Write imported skills to SKILLS/ in Relic format (see section 5).
 If original format is incompatible, keep original content and add YAML front matter.
