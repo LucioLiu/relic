@@ -25,14 +25,17 @@ If Relic is not yet installed on this machine, set it up in a stable location.
 git clone https://github.com/LucioLiu/relic.git ~/relic
 ```
 
-**Option B: If installed as an agent skill** (e.g., via ClawHub), the skill files are in a skill directory (e.g., `~/.openclaw/workspace/skills/relic-soul-chip/`). You must copy the full `brain/` contents to a user-accessible location:
+**Option B: If installed as an agent skill** (e.g., via ClawHub), the skill files are inside the skill directory (e.g., `~/.openclaw/workspace/skills/relic-soul-chip/`). This directory IS the full Relic project — copy the entire thing to a user-accessible location:
 
 ```bash
-mkdir -p ~/relic/brain
-cp -r [skill-directory]/brain/* ~/relic/brain/
+cp -r [skill-directory] ~/relic
 ```
 
-> ⚠️ **CRITICAL**: Whether Option A or B, the result must be a complete `~/relic/brain/` directory containing: `PROTOCOL.md`, `PROTOCOL.en.md`, `SOUL.template.md`, `USER.template.md`, `MEMORY.template.md`, `.relic-version`, and subdirectories `SKILLS/`, `PROJECTS/`, `SESSIONS/`, `ARCHIVE/`, `INBOX/`. If any files are missing, the next agent won't have the protocol to read.
+This copies the complete project including README, PROTOCOL, templates, examples, and update scripts — everything a new agent needs to understand Relic.
+
+> ⚠️ **CRITICAL**: The result must be a complete `~/relic/` directory. At minimum `~/relic/brain/` must contain: `PROTOCOL.md`, `PROTOCOL.en.md`, all templates, `.relic-version`, and subdirectories. But README and other root files are also needed for the full experience. If you only copy `brain/`, other agents won't see the README or integration guides.
+>
+> ⚠️ **Why copy the whole thing?** The skill directory inside OpenClaw/Hermes is temporary — if the user uninstalls the agent, the soul goes with it. Relic must live in its own stable location (`~/relic/`) independent of any agent.
 
 **Tell the user**: "I've set up Relic at `~/relic/brain/`. Other agents will need this path to connect."
 
@@ -40,7 +43,7 @@ cp -r [skill-directory]/brain/* ~/relic/brain/
 
 **Do this automatically when the user asks to set up Relic. Walk them through each step.**
 
-1. **Verify setup completeness**: Check `~/relic/brain/PROTOCOL.md` exists and is readable. If files are missing, copy from skill directory or re-clone. Do NOT proceed with broken setup.
+1. **Verify setup completeness**: Check `~/relic/brain/PROTOCOL.md` exists and is readable, and `~/relic/README.md` exists. If files are missing, copy from skill directory or re-clone. Do NOT proceed with broken setup.
 2. Read `~/relic/brain/PROTOCOL.md` Section 0 (First-time Setup) and follow all steps.
 3. Copy templates: `SOUL.template.md` → `SOUL.md`, `USER.template.md` → `USER.md`, `MEMORY.template.md` → `MEMORY.md`
 4. Ask the user: "What should your AI be called? What's its personality?" → Fill in `SOUL.md`

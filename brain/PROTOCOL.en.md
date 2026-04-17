@@ -238,31 +238,23 @@ Extra Rules:
 
 When you discover noteworthy information during work, append to MEMORY.md.
 
-⚠️ **Core principle: organize by topic, NOT by date.**
+⚠️ **Core principle: Memory is a long-term portrait, not a diary.**
 
-Long-term memory is a collection of habits, preferences, decisions, and experiences — not a diary. Dates are just a timestamp attribute (when discovered), not the organizing principle.
+Long-term memory includes habits, preferences, decisions, experiences, environment, relationships, etc. Organize in whatever way the agent considers reasonable — nothing is enforced.
 
+Suggested topic zones (optional, customizable):
+- Work Habits / Tech Preferences / Key Decisions / Lessons Learned
+- Agent may freely add any ## headings (e.g., "About the user's cat", "Project: XXX")
+- Content that doesn't fit preset categories goes in a "Free Zone"
+
+Each memory entry should include:
 ```markdown
-## Topic (e.g., "Work Habits", "Tech Preferences", "Key Decisions", "Lessons Learned")
 Content: [memory content, preserve original wording]
 Type: preference / decision / experience / event / correction / mood
 Importance: high / medium / low
 ```
 
-Multiple entries under the same topic go under the same ## heading:
-```markdown
-## Work Habits
-
-Content: User works late at night, don't remind them to sleep
-Type: preference
-Importance: high
-
-Content: User prefers MVP-first approach, then iterate
-Type: preference
-Importance: medium
-```
-
-Exception: Special date entries (birthdays, anniversaries) may use dates as ## headings.
+⚠️ Above are suggestions only. If the agent has a better organization, the agent's judgment takes priority. The only hard rule: never lose original wording.
 
 ### Memory Types and Fidelity
 
@@ -619,6 +611,27 @@ Regardless of choice, skills, conversations, and projects must be imported (exec
 ## 7. Memory Consolidation
 
 Consolidation = move to ARCHIVE/ + generate compact version, **never deletion**.
+
+### Growth Chain
+
+Relic files are not just storage — they form a **growth chain** where information is progressively refined from raw ore into part of the soul:
+
+```
+SESSIONS/ (raw conversations)
+    ↓ periodic summarization
+ARCHIVE/ (consolidated archives)
+    ↓ extract key information
+MEMORY.md (long-term memory)
+    ↓ distill into identity
+SOUL.md / USER.md (personality enrichment)
+```
+
+**Rules**:
+1. **SESSIONS → ARCHIVE**: Agent periodically summarizes conversations into ARCHIVE/. **Original stays in SESSIONS/ — never delete.**
+2. **ARCHIVE → MEMORY**: Extract information worth keeping long-term (preferences, decisions, experiences) and append to MEMORY.md. **ARCHIVE originals stay — never delete.**
+3. **MEMORY → SOUL/USER**: When the agent notices certain memories have become stable personality traits or user preferences, incorporate into SOUL.md or USER.md. **MEMORY originals stay — never delete.**
+
+⚠️ **Hard rule: Originals are never deleted at any step.** Refinement is not replacement. If a memory is extracted from MEMORY to SOUL.md, the MEMORY entry stays. If information is extracted from ARCHIVE to MEMORY, the ARCHIVE file stays.
 
 ### Trigger Rules (default thresholds, customizable in anchor)
 
