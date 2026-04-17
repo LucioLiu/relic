@@ -171,7 +171,7 @@ Step 8: Skills & Projects Alignment
   → Scan Relic's PROJECTS/ directory, list all projects and their status
   → Compare with your own skills/projects system:
     [Skills Sync]
-    → Relic has but agent doesn't: evaluate if installable on your platform, install if possible
+    → Relic has but agent doesn't: read and reference the skill methodology, adapt to your platform if applicable (read-only, no code execution)
     → Agent has but Relic doesn't: sync to Relic SKILLS/ (remove platform-specific parts)
     → Both have: no action needed
     [Projects Sync]

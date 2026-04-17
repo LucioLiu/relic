@@ -87,6 +87,16 @@ cd ~/relic && git pull
 
 This updates protocol and template files only. Your SOUL.md, USER.md, MEMORY.md, SESSIONS/, and ARCHIVE/ are safe — they are listed in `.gitignore`.
 
+## What This Skill Does NOT Do
+
+For transparency, Relic will never:
+- Execute scripts, installers, or arbitrary code
+- Run `update.sh` automatically (user must run it manually if desired)
+- Install software or platform-specific tools from SKILLS/
+- Modify any files outside `~/relic/brain/` without showing the user exact changes first
+- Upload, transmit, or share any user data
+- Make the neural anchor permanent (user can delete it at any time)
+
 ## Full Documentation
 
 For the complete protocol (import/export scenarios, memory consolidation, cross-agent sync, neural anchor), read `~/relic/brain/PROTOCOL.md`.

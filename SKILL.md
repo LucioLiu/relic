@@ -1,7 +1,7 @@
 ---
 name: relic-soul-chip
 description: "Relic Soul Chip — Give your AI agent a persistent personality and memory across sessions. Pure Markdown, human-readable. Switch agents, keep the soul."
-version: "0.2.2"
+version: "0.2.3"
 author: LucioLiu
 license: GPL-3.0
 homepage: "https://github.com/LucioLiu/relic"
@@ -102,6 +102,16 @@ The user's soul lives in `~/relic/brain/`. The new agent reads the same files an
 - 🔴 NEVER transmit, upload, or share user data
 - ⚠️ ALWAYS ask before recording sensitive info — show, confirm, allow redact
 - ⚠️ ALWAYS ask before modifying agent config — show exact text, get confirmation
+
+## What This Skill Does NOT Do
+
+For transparency, Relic will never:
+- Execute scripts, installers, or arbitrary code
+- Run update.sh automatically (user must opt in manually)
+- Install software or platform-specific tools from SKILLS/
+- Modify any files outside ~/relic/brain/ without showing exact changes first
+- Upload, transmit, or share any user data
+- Make the neural anchor permanent (user can remove it at any time)
 
 ## Full Documentation
 
