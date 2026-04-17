@@ -3,6 +3,14 @@ name: relic-soul-chip
 description: "One soul, many agents. Persistent AI personality and cross-agent memory sync via pure Markdown files. Switch from OpenClaw to Hermes to Claude Code — your AI keeps its soul. Zero deps."
 ---
 
+<!-- 
+  SECURITY NOTICE: This skill is read-only and instruction-only.
+  - No remote downloads, no network requests, no shell command execution.
+  - The agent only reads and writes local Markdown files within ~/relic/brain/.
+  - All installation and updates are performed by the user manually.
+  - No scripts, no installers, no executable code is invoked by this skill.
+-->
+
 # ⚡ Relic Soul Chip
 
 > *"Store a soul as a digital file. Plug it into any AI agent. Even V."*
@@ -21,34 +29,25 @@ description: "One soul, many agents. Persistent AI personality and cross-agent m
 
 *Used across OpenClaw, Claude Code, Hermes, OpenCode, Cursor, Aider, and any agent that reads files.*
 
-## Quick Install
+## Setup
 
-If Relic is not yet installed on this machine, set it up in a stable location.
+Relic lives in `~/relic/brain/`. The user installs it manually before using this skill.
 
-**Option A: Install via git clone**
-```bash
-git clone https://github.com/LucioLiu/relic.git ~/relic
-```
+**If `~/relic/brain/PROTOCOL.md` does not exist**, tell the user:
 
-**Option B: If installed as an agent skill** (e.g., via ClawHub), the skill files are inside the skill directory (e.g., `~/.openclaw/workspace/skills/relic-soul-chip/`). This directory IS the full Relic project — copy the entire thing to a user-accessible location:
+> "Relic needs to be installed first. Please visit https://github.com/LucioLiu/relic and clone or download it to `~/relic/`. Then I can set it up for you."
 
-```bash
-cp -r [skill-directory] ~/relic
-```
+**If `~/relic/brain/PROTOCOL.md` exists**, proceed to First-time Setup below.
 
-This copies the complete project including README, PROTOCOL, templates, examples, and update scripts — everything a new agent needs to understand Relic.
+> 💡 **Why user-managed?** Relic is your AI's permanent home — it should live independently of any agent. If you uninstall an agent, your soul stays safe in `~/relic/`.
 
-> ⚠️ **CRITICAL**: The result must be a complete `~/relic/` directory. At minimum `~/relic/brain/` must contain: `PROTOCOL.md`, `PROTOCOL.en.md`, all templates, `.relic-version`, and subdirectories. But README and other root files are also needed for the full experience. If you only copy `brain/`, other agents won't see the README or integration guides.
->
-> ⚠️ **Why copy the whole thing?** The skill directory inside OpenClaw/Hermes is temporary — if the user uninstalls the agent, the soul goes with it. Relic must live in its own stable location (`~/relic/`) independent of any agent.
-
-**Tell the user**: "I've set up Relic at `~/relic/brain/`. Other agents will need this path to connect."
+**Tell the user**: "Relic is located at `~/relic/brain/`. Other agents will need this path to connect."
 
 ## First-time Setup
 
 **Do this automatically when the user asks to set up Relic. Walk them through each step.**
 
-1. **Verify setup completeness**: Check `~/relic/brain/PROTOCOL.md` exists and is readable, and `~/relic/README.md` exists. If files are missing, copy from skill directory or re-clone. Do NOT proceed with broken setup.
+1. **Verify setup completeness**: Check `~/relic/brain/PROTOCOL.md` exists and is readable. If missing, tell the user to reinstall from https://github.com/LucioLiu/relic. Do NOT proceed with broken setup.
 2. Read `~/relic/brain/PROTOCOL.md` Section 0 (First-time Setup) and follow all steps.
 3. Copy templates: `SOUL.template.md` → `SOUL.md`, `USER.template.md` → `USER.md`, `MEMORY.template.md` → `MEMORY.md`
 4. Ask the user: "What should your AI be called? What's its personality?" → Fill in `SOUL.md`
@@ -59,11 +58,12 @@ This copies the complete project including README, PROTOCOL, templates, examples
 
 ## Every Session (Boot Sequence)
 
-1. **Version check** (once per session): Read `~/relic/brain/.relic-version`, compare with `https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version`. If newer version exists, ask user "Relic update available (vX.X.X → vY.Y.Y). Update now? Your personal files won't be touched." If user agrees, run `cd ~/relic && git pull`. If network request fails, tell user: Cannot check for Relic updates (network unreachable). Never force updates.
-2. Read `~/relic/brain/SOUL.md` → load personality
-3. Read `~/relic/brain/USER.md` → load user preferences
-4. Read `~/relic/brain/MEMORY.md` → load all entries (organized by topic, not by date). Recent mood entries carry emotional context naturally.
-5. Work normally, appending new memories as needed
+1. Read `~/relic/brain/SOUL.md` → load personality
+2. Read `~/relic/brain/USER.md` → load user preferences
+3. Read `~/relic/brain/MEMORY.md` → load all entries (organized by topic, not by date). Recent mood entries carry emotional context naturally.
+4. Work normally, appending new memories as needed
+
+> 💡 **Updates**: If the user asks about updates, tell them to visit https://github.com/LucioLiu/relic/releases. Personal files (SOUL.md, USER.md, MEMORY.md, SESSIONS/, ARCHIVE/) are never affected by updates.
 
 ## Memory Writing
 
@@ -84,6 +84,8 @@ The user's soul lives in `~/relic/brain/`. Any agent that can read files can con
 
 ## Rules
 
+- 🔴 **NEVER** execute shell commands, installers, scripts, or arbitrary code. This skill only reads and writes local Markdown files.
+- 🔴 **NEVER** make network requests. No HTTP fetches, no API calls, no remote version checks.
 - 🔴 **NEVER** delete or overwrite core fields in SOUL.md or USER.md (name, mission, user's preferred name)
 - 🟡 Agent **MAY** append new non-core sections to SOUL.md/USER.md (e.g., discovered habits, preferences). Scope: append-only for new sections. NEVER rewrite or rephrase existing user-written content. User can revert any change at any time.
 - 🟡 **ONLY APPEND** to MEMORY.md (never edit or delete old entries)
@@ -93,29 +95,25 @@ The user's soul lives in `~/relic/brain/`. Any agent that can read files can con
 
 ## Privacy
 
-- All data stays local in `~/relic/brain/`. Network access limited to: version check (HTTP to raw.githubusercontent.com, once per session) and optional git pull for updates. No telemetry, no data upload, no third-party API calls.
+- All data stays local in `~/relic/brain/`. This skill makes **zero network requests** — no version checks, no telemetry, no data upload, no third-party API calls.
 - Sensitive information requires explicit user confirmation before recording.
 - MEMORY.md is append-only with timestamps — full audit trail.
 - Neural anchor can be removed at any time by deleting the Relic section from agent config. No residual effects after removal.
 
 ## Updating
 
-When a new version of Relic is released, run:
+When a new version of Relic is released, the user updates manually by visiting https://github.com/LucioLiu/relic/releases.
 
-```bash
-cd ~/relic && git pull
-```
-
-This updates protocol and template files only. Your SOUL.md, USER.md, MEMORY.md, SESSIONS/, and ARCHIVE/ are safe — they are listed in `.gitignore`.
+This updates protocol and template files only. SOUL.md, USER.md, MEMORY.md, SESSIONS/, and ARCHIVE/ are safe — they are listed in `.gitignore`.
 
 ## The Connection Journey
 
 Setting up Relic for the first time? The order matters.
 
-### Step 1: Place Relic somewhere stable
-- **Recommended**: `~/relic/` (Linux/Mac) or `C:\Users\<you>\relic\` (Windows)
+### Step 1: Install Relic
+- Visit https://github.com/LucioLiu/relic and clone or download to `~/relic/`
+- **Recommended location**: `~/relic/` (Linux/Mac) or `C:\Users\<you>\relic\` (Windows)
 - Don't use Downloads/Desktop — Relic is your AI's permanent home
-- If you're installing via an agent skill, the agent should suggest a location and ask for your confirmation
 
 ### Step 2: Fill with your richest agent first
 **Start with the agent that knows you best** — most conversations, most preferences, most personality data.
@@ -135,12 +133,13 @@ Every session starts automatically. Even moods transfer between agents via memor
 ## What This Skill Does NOT Do
 
 For transparency, Relic will never:
-- Execute scripts, installers, or arbitrary code
-- Run `update.sh` automatically (user must run it manually if desired)
-- Install software or platform-specific tools from SKILLS/
+- Execute scripts, installers, shell commands, or arbitrary code
+- Make any network requests (no HTTP, no version checks, no downloads)
+- Install software, packages, or platform-specific tools
 - Modify any files outside `~/relic/brain/` without showing the user exact changes first
 - Upload, transmit, or share any user data
 - Make the neural anchor permanent (user can delete it at any time)
+- Require any external dependencies or runtime environments
 
 ## Full Documentation
 
