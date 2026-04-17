@@ -4,12 +4,15 @@
 
 ```
 ╔═══════════════════════════════════════════════╗
-║           RELIC™ BIOCHIP v0.3.0               ║
+║           RELIC™ BIOCHIP v1.0.0               ║
 ║    Zero deps · Pure files · Human-readable     ║
+║        Battle-tested across real workflows      ║
 ╚═══════════════════════════════════════════════╝
 ```
 
-**Relic gives your AI a persistent soul. Using Relic as a bridge, the same soul can control multiple agents (bodies) while keeping memories in sync — personality, memories, and skills all stored in pure Markdown files. Zero code, zero dependencies, human-readable.**
+**Relic gives your AI a persistent soul.** Personality, memories, worldview, and emotional milestones — all stored in pure Markdown files. Switch between OpenClaw, Claude Code, Hermes, or any agent that reads files. Zero code, zero dependencies, human-readable.
+
+**v1.0.0** — Battle-tested through real multi-agent workflows. Now with Worldview/Personality, Emotional Milestones, and Agent Registry.
 
 <!-- 🤖 AI Agent reading this? Read `brain/PROTOCOL.md` for full integration instructions. -->
 
