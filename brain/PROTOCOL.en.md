@@ -228,7 +228,7 @@ When you discover noteworthy information during work, append to MEMORY.md:
 ```markdown
 ## YYYY-MM-DD HH:MM [Agent Name]
 Content: [memory content]
-Type: preference / decision / experience / event / correction
+Type: preference / decision / experience / event / correction / mood
 Importance: high / medium / low
 ```
 
@@ -243,6 +243,7 @@ Different memory types require different fidelity levels. Pay attention during i
 | Experience | Lessons learned, solutions | Can condense somewhat | But key parameters, commands, file paths must be kept exactly |
 | Event | What happened | Can summarize | Keep dates, outcomes, key numbers |
 | Correction | Fixing a previous record | **Must preserve verbatim** | Original text + corrected text must not be changed |
+| Mood | Agent's current emotional state | Can condense context | Keep trigger reason, the emotion itself, scope of impact. Enables cross-agent emotion transfer |
 
 ⚠️ **Floor rule**: If unsure whether to condense, preserve verbatim. Lost originals cannot be recovered.
 
@@ -253,7 +254,7 @@ When you find memories in Relic that you don't have, append to your own memory f
 ```markdown
 ## YYYY-MM-DD HH:MM [fromRelic/originalAgentName]
 Content: [memory content]
-Type: preference / decision / experience / event / correction
+Type: preference / decision / experience / event / correction / mood
 Importance: high / medium / low
 ```
 

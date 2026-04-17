@@ -15,15 +15,17 @@
 
 ---
 
-## ⚡ 30 秒设置（推荐）
+## ⚡ 30 秒设置
 
-打开你的 AI Agent（OpenClaw、Hermes，任何能读文件的 Agent），说：
+```bash
+git clone https://github.com/LucioLiu/relic.git ~/relic
+```
 
-> "阅读 `relic/brain/PROTOCOL.md` 帮我设置 Relic。我想让 AI 叫 [名字]，风格是 [描述]。"
->
-> （还没想好？直接说"帮我设置 Relic"，AI 会引导你。）
+然后告诉你**最了解你的 Agent**：
 
-Agent 会自动完成所有设置。搞定。
+> "阅读 `~/relic/brain/PROTOCOL.md`，把你知道的我的一切导入进来。"
+
+搞定。完整多义体设置见[连接之旅](#-快速上手--连接之旅)。
 
 ---
 
@@ -51,69 +53,76 @@ Agent 会在自己的配置里记住"每次启动先读 Relic"（植入锚点）
 
 ---
 
-## 🚀 快速上手
+## 🚀 快速上手 — 连接之旅
 
-> 💡 **路径建议：** 把 Relic 放在稳定的位置：
-> - Linux/Mac: `~/relic/brain`
-> - Windows: `C:\Users\你的用户名\relic\brain`
-> - ⚠️ 不要放在 Downloads/桌面等临时位置，可能被不小心清理掉
+Relic 的设计理念是：**填一次，连多个**。以下是完整流程。
 
-### 方法一：让 Agent 帮你设置（推荐！）
+### 第 1 步：下载并安置 Relic
 
-打开你的 AI Agent，说：
+```bash
+git clone https://github.com/LucioLiu/relic.git ~/relic
+```
 
-> "阅读 `relic/brain/PROTOCOL.md` 帮我设置 Relic。我想让 AI 叫 [名字]，风格是 [描述]。"
->
-> （还没想好？直接说"帮我设置 Relic"，AI 会引导你。）
+> 💡 **放哪里**：`~/relic/`（Linux/Mac）或 `C:\Users\你的用户名\relic\`（Windows）。选一个稳定的位置——这是你 AI 的永久住所。不要放在 Downloads 或桌面。
 
-Agent 会自动完成所有设置。搞定。
+<details>
+<summary>没有 git？手动下载</summary>
 
-### 方法二：手动设置
+下载 [ZIP 文件](https://github.com/LucioLiu/relic/archive/refs/heads/main.zip)解压到 `~/relic/`。
 
-如果你想自己动手：
+</details>
 
-**第 1 步：** 下载项目（从 GitHub 克隆或下载 ZIP）。
+### 第 2 步：用最了解你的义体先填充 Relic 🔴 重要
 
-**第 2 步：** 进入项目里的 `brain/` 文件夹，你会看到三个模板文件：
-- `SOUL.template.md`
-- `USER.template.md`
-- `MEMORY.template.md`
+你大概率有一个最了解你的 Agent——对话最多、偏好最清楚。**从它开始。**
 
-把每个文件复制一份，把新文件名里的 `.template` 去掉：
-- 复制 `SOUL.template.md` → 把副本改名为 `SOUL.md`
-- 复制 `USER.template.md` → 把副本改名为 `USER.md`
-- 复制 `MEMORY.template.md` → 把副本改名为 `MEMORY.md`
+打开那个 Agent，说：
 
-原来的 `.template` 文件不要删——万一填错了，随时可以回到模板重来。
+> "阅读 `~/relic/brain/PROTOCOL.md`，把你知道的我的一切导入 Relic。"
 
-**第 3 步：** 用记事本打开 `SOUL.md` 和 `USER.md` 填写。只需要填"核心使命"就能开始用，其他的可以以后再补。
+Agent 会执行**场景A（完整导入）**——记忆、技能、对话、项目。等它完成并展示导入报告后再继续。
 
-**第 4 步：** 看下面"接入你的 Agent"。
+### 第 3 步：依次连接其他义体
 
-> 💡 **会用终端？**
-> ```bash
-> git clone https://github.com/LucioLiu/relic.git
-> cd relic/brain
-> cp SOUL.template.md SOUL.md
-> cp USER.template.md USER.md
-> cp MEMORY.template.md MEMORY.md
-> ```
+对其他每个 Agent（顺序随意），告诉它：
+
+> "阅读 `~/relic/brain/PROTOCOL.md` 帮我设置 Relic。"
+
+Agent 会执行**场景B（注入）**——读取灵魂、同步记忆、继承人格。
+
+**逐个验证**：问"我的 AI 叫什么名字？我叫什么？"——两个都对才算通过。通过了一个再连下一个。
+
+### 第 4 步：搞定！🎉
+
+从此每个会话自动启动。你的义体共享灵魂，记忆双向同步，甚至情绪也能通过记忆条目自然传递。
+
+> 💡 **"情绪传递"是什么意思**：如果义体A跟你吵了一架，它可能在 MEMORY.md 里记录一条情绪记忆。义体B下次启动时读到这条，自然就会带上情绪。不需要特殊机制——AI 理解它读到的东西就好。
 
 ---
 
-## 🔌 接入你的 Agent
+<details>
+<summary>手动设置（自己动手，不让 Agent 帮忙）</summary>
 
-| Agent | 接入指南 |
-|-------|---------|
+1. 进入克隆好的 `brain/` 目录
+2. 复制模板：`SOUL.template.md` → `SOUL.md`，`USER.template.md` → `USER.md`，`MEMORY.template.md` → `MEMORY.md`
+3. 用记事本打开 `SOUL.md` 和 `USER.md` 填写，先填"核心使命"就能开始
+4. 让你的 Agent 读 `brain/PROTOCOL.md`，它会接管后续步骤
+
+</details>
+
+---
+
+## 🔌 义体接入指南
+
+| 义体 | 接入指南 |
+|------|---------|
 | OpenClaw | [openclaw.md](examples/integrations/openclaw.md) |
 | Hermes | [hermes.md](examples/integrations/hermes.md) |
 | OpenCode | [opencode.md](examples/integrations/opencode.md) |
 | Claude Code | [generic.md](examples/integrations/generic.md) |
 | 其他 | [generic.md](examples/integrations/generic.md) |
 
-核心就两步：
-1. 填写 `SOUL.md`（AI 是谁）和 `USER.md`（你是谁）
-2. 在 Agent 的配置里**植入锚点**——加一段文字让 Agent 记得每次启动来读 Relic
+所有指南的思路一样：让义体读 `brain/PROTOCOL.md`，它会自己搞定。
 
 ---
 

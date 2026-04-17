@@ -15,15 +15,17 @@
 
 ---
 
-## ⚡ 30-Second Setup (Recommended)
+## ⚡ 30-Second Setup
 
-Open your AI agent (OpenClaw, Hermes, or any agent that can read files) and say:
+```bash
+git clone https://github.com/LucioLiu/relic.git ~/relic
+```
 
-> "Read `relic/brain/PROTOCOL.md` and set up Relic for me. I want my AI to be called [name], with [style] personality."
->
-> (Not sure yet? Just say "set up Relic for me" and the AI will guide you.)
+Then tell your **most knowledgeable agent**:
 
-The agent will handle everything. That's it.
+> "Read `~/relic/brain/PROTOCOL.md` and import everything you know about me."
+
+Done. See [The Connection Journey](#-quick-start--the-connection-journey) for the full multi-agent setup.
 
 ---
 
@@ -51,57 +53,66 @@ The agent remembers to read Relic every session via a "neural anchor" planted in
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start — The Connection Journey
 
-> 💡 **Path tip:** Put Relic somewhere stable:
-> - Linux/Mac: `~/relic/brain`
-> - Windows: `C:\Users\<you>\relic\brain`
-> - ⚠️ Don't put it in Downloads/Desktop — you might accidentally delete it
+Relic is designed for a specific journey: **fill once, connect many**. Here's how.
 
-### Option 1: Let Your Agent Set It Up (Recommended!)
+### Step 1: Download & Place Relic
 
-Open your AI agent and say:
+```bash
+git clone https://github.com/LucioLiu/relic.git ~/relic
+```
 
-> "Read `relic/brain/PROTOCOL.md` and set up Relic for me. I want my AI to be called [name], with [style] personality."
->
-> (Not sure yet? Just say "set up Relic for me" and the AI will guide you.)
+> 💡 **Where to put it**: `~/relic/` (Linux/Mac) or `C:\Users\<you>\relic\` (Windows). Pick a stable location — this is your AI's permanent home. Don't use Downloads or Desktop.
 
-The agent will handle all setup automatically. Done.
+<details>
+<summary>Manual download (no git)</summary>
 
-### Option 2: Manual Setup
+Download [the ZIP](https://github.com/LucioLiu/relic/archive/refs/heads/main.zip) and extract to `~/relic/`.
 
-If you prefer to do it yourself:
+</details>
 
-**Step 1.** Download the project (clone or download ZIP from GitHub).
+### Step 2: Fill Relic with Your Richest Agent First 🔴 Important
 
-**Step 2.** Go to the `brain/` folder inside the project. You'll see three template files:
-- `SOUL.template.md`
-- `USER.template.md`
-- `MEMORY.template.md`
+You probably have one agent that knows you best — the most conversations, the most preferences. **Start with that one.**
 
-Copy each one and remove `.template` from the name:
-- Copy `SOUL.template.md` → name the copy `SOUL.md`
-- Copy `USER.template.md` → name the copy `USER.md`
-- Copy `MEMORY.template.md` → name the copy `MEMORY.md`
+Open that agent and say:
 
-The original `.template` files stay untouched — they're your backup if you ever want to start over.
+> "Read `~/relic/brain/PROTOCOL.md` and import everything you know about me into Relic."
 
-**Step 3.** Open `SOUL.md` and `USER.md` in any text editor (Notepad works fine) and fill them in. You only need to fill in "Core Mission" to get started — everything else can be filled in later.
+The agent will execute **Scenario A (Full Import)** — memories, skills, conversations, projects. Wait for the full import report before continuing.
 
-**Step 4.** See "Connect Your Agent" below.
+### Step 3: Connect Your Other Agents, One at a Time
 
-> 💡 **Using terminal?**
-> ```bash
-> git clone https://github.com/LucioLiu/relic.git
-> cd relic/brain
-> cp SOUL.template.md SOUL.md
-> cp USER.template.md USER.md
-> cp MEMORY.template.md MEMORY.md
-> ```
+For each additional agent (in any order), tell it:
+
+> "Read `~/relic/brain/PROTOCOL.md` and set up Relic for me."
+
+The agent will execute **Scenario B (Inject)** — read the soul, sync memories, adopt personality.
+
+**Verify each one**: Ask "What's my AI's name? What's my name?" — both must match. Only move to the next agent after verification passes.
+
+### Step 4: Done! 🎉
+
+Every session from now on starts automatically. Your agents share a soul, memories sync bidirectionally, and even moods transfer naturally between agents through memory entries.
+
+> 💡 **What "mood transfer" means**: If Agent A had a frustrating conversation with you, it may record a mood entry in MEMORY.md. When Agent B starts its next session, it reads that entry and naturally carries the emotional context. No special code — just the AI understanding what it reads.
 
 ---
 
-## 🔌 Connect Your Agent
+<details>
+<summary>Manual Setup (do it yourself, no agent help)</summary>
+
+1. Go to `brain/` inside the cloned repo
+2. Copy templates: `SOUL.template.md` → `SOUL.md`, `USER.template.md` → `USER.md`, `MEMORY.template.md` → `MEMORY.md`
+3. Open `SOUL.md` and `USER.md` in any text editor, fill in "Core Mission" to start
+4. Point your agent to `brain/PROTOCOL.md` — it'll take over from there
+
+</details>
+
+---
+
+## 🔌 Agent Integration Guides
 
 | Agent | Integration Guide |
 |-------|------------------|
@@ -111,9 +122,7 @@ The original `.template` files stay untouched — they're your backup if you eve
 | Claude Code | [generic.md](examples/integrations/generic.md) |
 | Other | [generic.md](examples/integrations/generic.md) |
 
-The core idea is always two steps:
-1. Fill in `SOUL.md` (who your AI is) and `USER.md` (who you are)
-2. Plant a **neural anchor** in your agent's config — a short text block that tells the agent to read Relic every session
+All guides follow the same pattern: point your agent to `brain/PROTOCOL.md` and it handles the rest.
 
 ---
 

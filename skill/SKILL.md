@@ -43,7 +43,7 @@ If `git` is not available, download and extract `https://github.com/LucioLiu/rel
 1. **Version check** (once per session): Read `~/relic/brain/.relic-version`, compare with `https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version`. If newer version exists, ask user "Relic update available (vX.X.X → vY.Y.Y). Update now? Your personal files won't be touched." If user agrees, run `cd ~/relic && git pull`. If network request fails, tell user: Cannot check for Relic updates (network unreachable). Never force updates.
 2. Read `~/relic/brain/SOUL.md` → load personality
 3. Read `~/relic/brain/USER.md` → load user preferences
-4. Read `~/relic/brain/MEMORY.md` → load recent events (last 30 entries)
+4. Read `~/relic/brain/MEMORY.md` → load recent events (last 30 entries). Recent mood entries are read naturally — enabling cross-agent emotion transfer.
 5. Work normally, appending new memories as needed
 
 ## Memory Writing
@@ -53,7 +53,7 @@ Append to `~/relic/brain/MEMORY.md` with this format:
 ```
 ## YYYY-MM-DD HH:MM [AgentName]
 Content: [what happened]
-Type: preference / decision / experience / event / correction
+Type: preference / decision / experience / event / correction / mood
 Importance: high / medium / low
 ```
 
@@ -86,6 +86,30 @@ cd ~/relic && git pull
 ```
 
 This updates protocol and template files only. Your SOUL.md, USER.md, MEMORY.md, SESSIONS/, and ARCHIVE/ are safe — they are listed in `.gitignore`.
+
+## The Connection Journey
+
+Setting up Relic for the first time? The order matters.
+
+### Step 1: Place Relic somewhere stable
+- **Recommended**: `~/relic/` (Linux/Mac) or `C:\Users\<you>\relic\` (Windows)
+- Don't use Downloads/Desktop — Relic is your AI's permanent home
+- If you're installing via an agent skill, the agent should suggest a location and ask for your confirmation
+
+### Step 2: Fill with your richest agent first
+**Start with the agent that knows you best** — most conversations, most preferences, most personality data.
+
+1. Tell that agent: "Read `~/relic/brain/PROTOCOL.md` and import everything you know about me into Relic" (Scenario A)
+2. Wait for the full import report before moving on
+
+### Step 3: Connect other agents one at a time
+For each additional agent:
+1. Tell it: "Read `~/relic/brain/PROTOCOL.md` and set up Relic" (Scenario B)
+2. Verify: "What's my AI's name? What's my name?"
+3. Move to next agent only after verification passes
+
+### Step 4: Daily use
+Every session starts automatically. Even moods transfer between agents via memory entries — if Agent A had a rough conversation, Agent B may carry that naturally through recent memory.
 
 ## What This Skill Does NOT Do
 

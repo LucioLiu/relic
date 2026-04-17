@@ -19,7 +19,7 @@
 > 参考格式 / Reference format:
 > ## YYYY-MM-DD HH:MM [义体名 / Agent Name]
 > Content: ...
-> Type: preference / decision / experience / event / correction
+> Type: preference / decision / experience / event / correction / mood
 > Importance: high / medium / low
 
 ---

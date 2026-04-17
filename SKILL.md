@@ -74,7 +74,7 @@ All file operations are confined to `~/relic/brain/` (or user-specified director
 ```
 ## YYYY-MM-DD HH:MM [AgentName]
 Content: [what happened]
-Type: preference / decision / experience / event / correction
+Type: preference / decision / experience / event / correction / mood
 Importance: high / medium / low
 ```
 
@@ -102,6 +102,35 @@ The user's soul lives in `~/relic/brain/`. The new agent reads the same files an
 - 🔴 NEVER transmit, upload, or share user data
 - ⚠️ ALWAYS ask before recording sensitive info — show, confirm, allow redact
 - ⚠️ ALWAYS ask before modifying agent config — show exact text, get confirmation
+
+## The Connection Journey
+
+When setting up Relic for the first time, the order matters:
+
+### Step 1: Choose a home for Relic
+Pick a stable, easy-to-remember location:
+- **Recommended**: `~/relic/` (Linux/Mac) or `C:\Users\<you>\relic\` (Windows)
+- Avoid Downloads, Desktop, or temp folders — Relic is permanent
+- If installing via an agent skill (e.g., OpenClaw), the agent should suggest a location and confirm with you
+
+### Step 2: Fill Relic with your richest agent first
+Your agents have different amounts of memory about you. **Start with the one that knows you best** — the one with the most conversations, preferences, and personality data.
+
+1. Tell that agent: "Read `~/relic/brain/PROTOCOL.md` and import everything you know about me into Relic"
+2. The agent will execute Scenario A (Full Import) — memories, skills, conversations, projects
+3. Wait for it to finish completely and show you the import report
+
+### Step 3: Connect your other agents, one at a time
+For each additional agent (in any order):
+1. Tell the agent: "Read `~/relic/brain/PROTOCOL.md` and set up Relic"
+2. The agent will execute Scenario B (Inject) — read the soul, sync memories, inject personality
+3. Verify: ask "What's my AI's name? What's my name?" — both must be correct
+4. Only move to the next agent after verification passes
+
+### Step 4: Daily use
+After setup, every session starts automatically. No extra steps needed.
+
+> 💡 **Tip**: If you have a conversation with Agent A that changes something important (new preference, big decision), Agent B will naturally pick it up next session via Relic MEMORY.md sync. Even moods transfer — if Agent A had a frustrating conversation, Agent B may carry that context naturally through memory entries.
 
 ## What This Skill Does NOT Do
 
