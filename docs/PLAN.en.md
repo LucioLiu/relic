@@ -152,7 +152,7 @@ When exporting a .relic file (zip package), three-tier distillation:
 
 ## Neural Anchor Guide
 
-After connecting to Relic, an anchor must be planted in the agent's own core config file. Full anchor template in `brain/PROTOCOL.md` Section 9.
+After connecting to Relic, an anchor must be planted in the agent's own core config file. Full anchor template in `docs/protocol.md` Section 9.
 
 Anchor locations per agent:
 - OpenClaw → AGENTS.md

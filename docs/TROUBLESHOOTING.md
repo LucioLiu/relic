@@ -67,7 +67,7 @@
 
 **解决**：
 1. 告诉躯壳："请在 MEMORY.md 全文里搜索 [关键词]"
-2. 如果 MEMORY.md 太大（超过 16K tokens），需要整理——参考 PROTOCOL.md 第七节
+2. 如果 MEMORY.md 太大（超过 16K tokens），需要整理——参考 docs/protocol.md 第七节
 3. 整理后 MEMORY.md 会变短，关键信息被保留
 
 ---
@@ -179,6 +179,6 @@ chmod 444 SOUL.md USER.md    # 改回只读
 
 ## 找不到答案 / Can't find the answer
 
-1. 重新阅读 `brain/PROTOCOL.md`——大部分问题在协议里都有说明
+1. 重新阅读 `docs/protocol.md`——大部分问题在协议里都有说明
 2. 查看 `examples/example-brain/`——看示例是怎么填的
 3. 在 GitHub 上提 Issue

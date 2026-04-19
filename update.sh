@@ -27,8 +27,10 @@ fi
 echo "📦 Updating: v$CUR_VERSION → v$NEW_VERSION"
 
 # Update protocol files (safe — these contain no user data)
-cp "$TMPDIR/relic/brain/PROTOCOL.md" brain/PROTOCOL.md
-cp "$TMPDIR/relic/brain/PROTOCOL.en.md" brain/PROTOCOL.en.md
+cp "$TMPDIR/relic/docs/protocol.zh-CN.md" docs/protocol.zh-CN.md
+cp "$TMPDIR/relic/docs/protocol.md" docs/protocol.md
+cp "$TMPDIR/relic/docs/resonate-soul.zh-CN.md" docs/resonate-soul.zh-CN.md
+cp "$TMPDIR/relic/docs/resonate-soul.md" docs/resonate-soul.md 2>/dev/null || true
 cp "$TMPDIR/relic/brain/SOUL.template.md" brain/SOUL.template.md
 cp "$TMPDIR/relic/brain/USER.template.md" brain/USER.template.md
 cp "$TMPDIR/relic/brain/MEMORY.template.md" brain/MEMORY.template.md
@@ -43,6 +45,14 @@ cp "$TMPDIR/relic/SKILL.md" SKILL.md 2>/dev/null || true
 mkdir -p docs 2>/dev/null || true
 cp "$TMPDIR/relic/docs/PLAN.md" docs/PLAN.md 2>/dev/null || true
 cp "$TMPDIR/relic/docs/TROUBLESHOOTING.md" docs/TROUBLESHOOTING.md 2>/dev/null || true
+cp "$TMPDIR/relic/docs/upload-soul.zh-CN.md" docs/upload-soul.zh-CN.md 2>/dev/null || true
+cp "$TMPDIR/relic/docs/upload-soul.md" docs/upload-soul.md 2>/dev/null || true
+cp "$TMPDIR/relic/docs/load-soul.zh-CN.md" docs/load-soul.zh-CN.md 2>/dev/null || true
+cp "$TMPDIR/relic/docs/load-soul.md" docs/load-soul.md 2>/dev/null || true
+
+# Update agent routers
+cp "$TMPDIR/relic/AGENT.md" AGENT.md 2>/dev/null || true
+cp "$TMPDIR/relic/AGENT.zh-CN.md" AGENT.zh-CN.md 2>/dev/null || true
 
 # Update READMEs
 cp "$TMPDIR/relic/README.md" README.md
