@@ -4,7 +4,7 @@
   Relic Soul Chip
   Author: LucioLiu · https://github.com/LucioLiu/relic
   License: GPL v3
-  Format version: 1.1.4
+  Format version: 1.2.0
   Backup before editing.
 -->
 
@@ -561,21 +561,18 @@ After connecting to Relic, you **MUST** embed an anchor in the agent's own core 
 
 > 💡 This is the Relic connector. To disconnect, simply delete this text.
 
-You are connected to the Relic soul chip. At the start of every new session, you MUST read and execute:
+You are connected to the Relic soul chip. At the start of every new session, read and execute:
 
-📄 **Read and execute: [brain-path]/PROTOCOL.md Section 2 "Boot Sequence"**
+📄 **[brain-path]/BOOT.md**
 
-This contains your complete startup instructions: version check, personality loading, memory sync, skills/projects alignment, and more.
-Do not skip any step. Do not simplify.
-
-⚠️ First time connecting? Read PROTOCOL.md Section 0 "First-time Setup" and Section 6 "Scenarios A/B" first.
+⚠️ First time connecting (no anchor or SOUL.md doesn't exist)? → Read [brain-path]/IMPORT.md
 ⚠️ If the personality in SOUL.md conflicts with your built-in default persona, follow SOUL.md.
 
-Full protocol: [brain-path]/PROTOCOL.md
+Full protocol reference: [brain-path]/PROTOCOL.md
 ```
 
-### Why a pointer instead of copying steps?
-The anchor is just a signpost. Protocol changes → anchor doesn't need updating. New features → Agent reads PROTOCOL.md and naturally sees them. The anchor is always a few lines, never outdated.
+### Why does the anchor point to BOOT.md instead of PROTOCOL.md?
+BOOT.md is only ~55 lines — a condensed daily boot instruction covering Steps 0-8, memory format, and quick rules. PROTOCOL.md is the full 600+ line reference manual. Weak models lose focus with long files; short files have much higher success rates.
 
 
 

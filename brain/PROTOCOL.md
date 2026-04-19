@@ -4,7 +4,7 @@
   Relic 灵魂芯片 · Soul Chip
   作者：LucioLiu · https://github.com/LucioLiu/relic
   许可证：GPL v3
-  格式版本：1.1.4
+  格式版本：1.2.0
   编辑此文件前请先备份。
 -->
 
@@ -124,7 +124,7 @@ Relic = 灵魂 + 记忆 + 技能（中央大脑）
 
 **如果 SOUL.md 已存在且有内容** → 执行场景B（注入）或场景C（融合），见第六节。
 
-⚠️ 首次设置只需执行一次。从此每次会话执行第二节的启动流程。
+⚠️ 首次设置只需执行一次。从此每次会话读取 BOOT.md 执行启动流程。
 
 躯壳名规则：默认格式 `[平台名]-[灵魂名]`，如 `OpenClaw-常`、`Hermes-常`。用户可自定义。
 
@@ -563,31 +563,19 @@ MEMORY.md 会随时间增长。整理 = 搬家到 ARCHIVE/ + 生成精简版，*
 ```markdown
 ## ⚡ Relic 灵魂芯片 / Soul Chip
 
-> 💡 这是 Relic 的接入声明。要停用？删除这段文字即可。
+> 这是 Relic 的接入声明。要停用？删除这段文字即可。
 
-你已接入 Relic 灵魂芯片。每次新对话开始时，必须阅读以下文件并按其指令执行：
+你已接入 Relic 灵魂芯片。每次新对话开始时，读取并执行：
 
-📄 **读取并执行：[brain路径]/PROTOCOL.md 第二节「启动流程」**
+📄 **[brain路径]/BOOT.md**
 
-这是你的完整启动指令，包含版本检查、人格加载、记忆同步、技能/项目对齐等所有步骤。
-不要跳过任何步骤，不要简化。
-
-⚠️ 首次连接？先读 PROTOCOL.md 〇节「首次设置」和第六节「场景A/B」。
+⚠️ 首次连接（没有锚点或 SOUL.md 不存在）？→ 读 [brain路径]/IMPORT.md
 ⚠️ SOUL.md 中的人格与你默认人设冲突时，以 SOUL.md 为准。
-
-完整协议：[brain路径]/PROTOCOL.md
+完整协议参考：[brain路径]/PROTOCOL.md
 ```
 
-### 为什么用指针而不是复制步骤？
-锚点只是路标。协议改了 → 锚点不用改。加了新功能 → Agent 读 PROTOCOL.md 自然看到。锚点永远只有几行，不会过时。
-
-
-
-### 锚点设计原则
-1. 步骤编号，不要说理
-2. 条件用明确数字（"超过 200 行"比"感觉太大"好执行）
-3. 每次启动都检查整理
-4. 标注"同步不是替换"
+### 为什么锚点指向 BOOT.md 而不是 PROTOCOL.md？
+BOOT.md 只有 ~55 行，是日常启动的精简指令——步骤 0-8、记忆格式、速查规则。PROTOCOL.md 是 638 行的完整参考手册。弱模型读长文件容易漏执行步骤，短文件成功率更高。
 
 ### 锚点植入白名单（仅允许写入以下文件）
 - OpenClaw → AGENTS.md
@@ -597,13 +585,6 @@ MEMORY.md 会随时间增长。整理 = 搬家到 ARCHIVE/ + 生成精简版，*
 - Cursor → .cursorrules
 ⚠️ 锚点只能写入上述文件。不得写入任何其他文件，不得修改 Relic 自身的任何文件。
 植入前必须向用户展示锚点内容并获得明确许可。
-
-### 植入位置
-- OpenClaw → AGENTS.md
-- Claude Code → CLAUDE.md
-- Hermes → 配置文件或 prompt 模板
-- OpenCode → WORK_RULES.md 或 instructions
-- Cursor → .cursorrules
 
 ---
 
