@@ -563,16 +563,14 @@ After connecting to Relic, you **MUST** embed an anchor in the agent's own core 
 
 You are connected to the Relic soul chip. At the start of every new session, read and execute:
 
-📄 **[brain-path]/BOOT.md**
+📄 **[project-path]/docs/resonate-soul.md**
 
-⚠️ First time connecting (no anchor or SOUL.md doesn't exist)? → Read [brain-path]/IMPORT.md
-⚠️ If the personality in SOUL.md conflicts with your built-in default persona, follow SOUL.md.
-
-Full protocol reference: [brain-path]/PROTOCOL.md
+⚠️ If SOUL.md personality conflicts with your default persona, SOUL.md takes precedence.
+Full protocol reference: [project-path]/docs/protocol.md
 ```
 
-### Why does the anchor point to BOOT.md instead of PROTOCOL.md?
-BOOT.md is only ~55 lines — a condensed daily boot instruction covering Steps 0-8, memory format, and quick rules. PROTOCOL.md is the full 600+ line reference manual. Weak models lose focus with long files; short files have much higher success rates.
+### Why does the anchor point to resonate-soul instead of the full protocol?
+Resonate Soul is only ~55 lines — a condensed daily boot instruction covering Steps 0-8, memory format, and quick rules. The full protocol is at docs/protocol.md (600+ lines). Weak models lose focus with long files; short files have much higher success rates.
 
 
 
