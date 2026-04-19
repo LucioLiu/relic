@@ -2,7 +2,7 @@
   Relic 灵魂芯片 — "记忆"文件模板
   Relic Soul Chip — "Memory" file template
   
-  义体在工作中不断向这里追加新记忆。原始记录永不删除。
+  躯壳在工作中不断向这里追加新记忆。原始记录永不删除。
   The agent appends new memories here during work. Original records are never deleted.
 -->
 
@@ -13,7 +13,7 @@
 
 ---
 
-> ⚠️ 记忆格式完全不强制。以下只是建议，义体可以用任何清晰的格式写入。
+> ⚠️ 记忆格式完全不强制。以下只是建议，躯壳可以用任何清晰的格式写入。
 > ⚠️ Memory format is completely optional. Below are suggestions only. Use any clear format.
 
 ---
@@ -41,18 +41,18 @@
 *放这里：解决过的问题、排查经验、注意事项*
 *Put here: problems solved, debugging experience, gotchas*
 
-## 义体列表 / Agent Registry
+## 躯壳列表 / Agent Registry
 
-> 已接入的义体清单。每个义体接入时追加一条，后续可补充备注。
+> 已接入的躯壳清单。每个躯壳接入时追加一条，后续可补充备注。
 > Registry of connected agents. Append an entry when each agent connects. Notes can be added later.
 
 *格式 / Format:*
 <!-- 
-### [义体名] / [Agent Name]
+### [躯壳名] / [Agent Name]
 - 平台 / Platform: [OpenClaw / Claude Code / ...]
 - 首次接入 / First Connected: YYYY-MM-DD
 - 状态 / Status: 活跃 / 休眠 / 已退役
-- 备注 / Notes: [义体特点、使用场景等，可后续补充]
+- 备注 / Notes: [躯壳特点、使用场景等，可后续补充]
 -->
 
 ## 自由区域 / Free Zone
@@ -60,5 +60,5 @@
 *放这里：任何不适合上面的内容。自己加新的 ## 标题也完全可以。*
 *Put here: anything that doesn't fit above. Adding new ## headings is perfectly fine.*
 
-> ⚠️ 如果你有来自其他义体的原始记忆文件，把原文完整粘贴到这里或新增区域。不要丢失任何信息。
+> ⚠️ 如果你有来自其他躯壳的原始记忆文件，把原文完整粘贴到这里或新增区域。不要丢失任何信息。
 > ⚠️ If you have raw memory files from another agent, paste the full original text here or in new sections. Do not lose any information.

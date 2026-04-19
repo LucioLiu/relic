@@ -1,7 +1,7 @@
 ---
 name: relic-soul-chip
-description: "Relic Soul Chip — Give your AI agent a persistent personality and memory across sessions. Pure Markdown, human-readable. Switch agents, keep the soul."
-version: "1.0.0"
+description: "Relic Soul Chip — Give your AI agent a persistent personality and memory across sessions. Pure Markdown, human-readable. Switch hosts, keep the soul."
+version: "1.1.1"
 author: LucioLiu
 license: GPL-3.0
 homepage: "https://github.com/LucioLiu/relic"
@@ -28,12 +28,12 @@ metadata:
 
 Give your AI agent a persistent personality and memory that survives sessions and follows the user across different agents. Pure Markdown. Human-readable.
 
-**Your AI forgets you every session.** Preferences, personality, history — gone. **Relic fixes this.** Your AI's soul lives in plain Markdown files. Switch agents, keep the soul.
+**Your AI has memories, but they're trapped in silos.** Each tool keeps its own memory — OpenClaw knows one version of you, Hermes knows another. **Relic unifies them.** One soul in plain Markdown files. Switch hosts, keep the soul.
 
 ### Why Relic?
 
 - ⚡ **Zero dependencies** — pure Markdown, `cat` works
-- 🔄 **Cross-agent sync** — one soul, many bodies
+- 🔄 **Cross-agent sync** — one soul, many hosts. Central brain + bidirectional sync: every agent reads AND writes
 - 🧠 **Self-evolving** — AI enriches its personality as it learns
 - 👁️ **Human-readable** — open any file in a text editor
 - 🔒 **Privacy-first** — all data stays local
@@ -58,7 +58,7 @@ All file operations are confined to `~/relic/brain/` (or user-specified director
 2. Read the full protocol: `~/relic/brain/PROTOCOL.md`
 3. Copy templates to active files (SOUL.md, USER.md, MEMORY.md)
 4. Help user fill in SOUL.md (AI name + core mission) and USER.md (user preferences)
-5. **Neural anchor (optional):** Ask user if they want to add a startup reference to their agent config. If yes, show exactly what will be appended, get confirmation, then append. Do not modify existing config content.
+5. **Neural anchor (strongly recommended):** Tell user this is highly recommended — without it, the agent will forget to read Relic next session, breaking memory sync. Ask if they want to add a startup reference to their agent config. If yes, show exactly what will be appended, get confirmation, then append. Do not modify existing config content.
 6. Verify: ask "What's my AI's name? What's my name?" — both must be correct
 
 ### Every Session (Boot Sequence)

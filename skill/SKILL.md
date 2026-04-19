@@ -18,16 +18,16 @@ description: "One soul, many agents. Persistent AI personality and cross-agent m
 
 # ⚡ Relic Soul Chip
 
-> *"Store a soul as a digital file. Plug it into any AI agent. Even V."*
+> *"Store a soul as a digital file. Plug it into any AI agent."*
 
-**Your AI forgets you every session.** Your preferences, your personality, your history — gone the moment you close the chat. Every new agent starts from zero.
+**Your AI has memories, but they're scattered across tools.** Each AI tool keeps its own separate memory — none of them share what they know about you.
 
-**Relic fixes this.** Your AI's personality and memory live in plain Markdown files. Switch between OpenClaw, Claude Code, Hermes, or any agent — your AI keeps its soul.
+**Relic fixes this.** Your AI's personality and memory live in plain Markdown files. Switch between OpenClaw, Claude Code, Hermes, or any host — your AI keeps its soul.
 
 ### Why Relic?
 
 - ⚡ **Zero dependencies** — pure Markdown, `cat` works. No installers, no runtimes, no npm packages
-- 🔄 **Cross-agent sync** — one soul, many bodies. Switch agents freely, memories follow automatically
+- 🔄 **Cross-agent sync** — one soul, many hosts. Central brain + bidirectional sync. Every agent reads AND writes memories back
 - 🧠 **Self-evolving** — AI enriches its own personality as it learns about you, without interrupting your work
 - 👁️ **Human-readable** — open any file in a text editor. You own your data, always
 - 🔒 **Privacy-first** — all data stays local. No telemetry, no cloud, no third-party APIs
@@ -58,7 +58,7 @@ Relic lives in `~/relic/brain/`. The user installs it manually before using this
 4. Ask the user: "What should your AI be called? What's its personality?" → Fill in `SOUL.md`
 5. Ask the user: "What should your AI call you? Any preferences?" → Fill in `USER.md`
 6. Verify: ask "What's your AI's name? What's your name?" — both must match.
-7. (Optional) Ask if user wants auto-load. If yes, show exact anchor text, get confirmation, append. Tell user they can disable by deleting the anchor.
+7. (Strongly recommended) Ask if user wants auto-load — without the anchor, the agent forgets Relic between sessions and memory sync breaks. If yes, show exact anchor text, get confirmation, append. Tell user they can disable by deleting the anchor.
 8. **Tell the user the path**: "Relic is ready at `~/relic/brain/`. To connect other agents, tell them to read `~/relic/brain/PROTOCOL.md`." 
 
 ## Every Session (Boot Sequence)
@@ -72,7 +72,9 @@ Relic lives in `~/relic/brain/`. The user installs it manually before using this
 2. Read `~/relic/brain/SOUL.md` → load personality
 3. Read `~/relic/brain/USER.md` → load user preferences
 4. Read `~/relic/brain/MEMORY.md` → load all entries (organized by topic, not by date). Recent mood entries carry emotional context naturally.
-5. Work normally, appending new memories as needed
+5. Sync new memories from Relic to your own memory (bidirectional — read from Relic AND write back)
+6. Check SESSIONS/ for missed conversation logs
+7. Work normally, appending new memories as needed
 
 ## Memory Writing
 

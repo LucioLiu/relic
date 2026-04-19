@@ -30,7 +30,7 @@ Fill them in (or ask your agent to help).
 Find your agent's **core startup file** — the file it reads every session.
 Add this to that file:
 
-> 💡 **Tip**: If your agent prefers Chinese, use the anchor template from `PROTOCOL.md` (Chinese version). For English, use the template below. / 如果你的义体偏好中文，使用 `PROTOCOL.md` 里的锚点模板。
+> 💡 **Tip**: If your agent prefers Chinese, use the anchor template from `PROTOCOL.md` (Chinese version). For English, use the template below. / 如果你的躯壳偏好中文，使用 `PROTOCOL.md` 里的锚点模板。
 
 ```markdown
 ## ⚡ Relic Soul Chip
@@ -42,7 +42,7 @@ You are connected to the Relic soul chip. Your memory has two homes:
 2. Relic soul chip (shared across agents, maintained by you)
 
 ⚠️ This is a sync, not a brain replacement.
-⚠️ If the personality in SOUL.md conflicts with your built-in default persona, follow SOUL.md. You are the body; Relic is the soul.
+You are the host; Relic is the soul.
 
 ⚠️ Pre-check: If this is the first connection with this agent, and the agent already has memories, skills, or conversation records about the user, execute Scenario A full import first (see PROTOCOL.md Section 6, Scenario A). If Relic files don't exist yet, run first-time setup (see PROTOCOL.md Section 0).
 

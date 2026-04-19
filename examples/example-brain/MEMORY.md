@@ -1,60 +1,46 @@
+<!--
+  示例记忆文件——展示填好后的 MEMORY.md 长什么样。
+  ⚠️ 记忆的主题分类完全由内容和agent自行决定，不强制任何分类名。
+  下面的"工作习惯""技术偏好"等只是银手这个示例的分类。
+  真正填写时，根据实际信息内容自由组织 ## 标题。
+  核心原则：信息100%保留 > 格式美观。宁可多写不要少写。
+  This is an example — categorize freely. 100% information preservation is priority #1.
+-->
+
 # 记忆 / Memory
 
-*上次整理 / Last consolidated: 从未 / Never*
-*当前条目数 / Entries: 12*
+*当前条目数 / Entries: 4*
+*上次整理 / Last consolidated: 尚未整理*
 
 ---
 
-## 工作习惯
+## （以下分类名是银手自己设的，你的记忆按你的内容自由命名）
 
-V 习惯凌晨写代码，经常 1-3 点还在 push commit。深夜发消息不要提醒"该休息了"，会烦。（偏好，高）
+### 2026-03-02 [Silverhand-OpenClaw]
+内容：消息队列没有自动清理会导致消息静默丢失。队列必须有上限+自动清理+告警。
+类型：经验
+重要度：高
 
-V 做项目时喜欢先跑通最小可用版本，然后迭代。不要一开始就搞完美架构。（偏好，中）
+### 2026-03-03 [Silverhand-OpenClaw]
+内容：数据库选 PostgreSQL。理由：项目有用户表/订单表/关联查询等关系型需求。MongoDB 不适合。
+类型：决策
+重要度：高
 
-V 用 Git 习惯很差，经常 force push，commit message 写 "fix" 就完事。帮他整理 git 历史时要小心。（经验，中）
+### 2026-03-01 [Silverhand-OpenClaw]
+内容：渗透方案选择"不留痕迹"优先于"快速"。社工获取低权限→内部提权。
+类型：决策
+重要度：高
 
-## 技术偏好
+---
 
-V 的项目统一用 Vite，不用 Webpack。之前有同事发 Webpack 配置导致构建失败。（经验，高）
+## 躯壳注册表 / Agent Registry
 
-V 偏好纯 CSS，不喜欢 Tailwind。不要引入 CSS 框架。（偏好，中）
+### Silverhand-OpenClaw
+- 平台：OpenClaw
+- 首次连接：2026-03-01
+- 状态：活跃
+- 备注：银手风格的躯壳，嘴毒但靠谱
 
-## 重要决策
-
-V 决定项目先不做移动端适配，桌面优先，以后再说。（决策，中）
-
-定价方案：免费版限 3 个项目，Pro 版 $5/月不限项目。先把产品做出来再考虑支付。（决策，高）
-
-## 踩坑经验
-
-Fly.io 部署时 SQLite 需要挂载 volume，不然重启后数据丢失。花了两小时排查。（经验，高）
-
-Turso 的 SQLite 免费版有行数限制，测试数据快到上限了。（经验，高）
-
-## 义体列表 / Agent Registry
-
-### OpenClaw-银手 / OpenClaw-Silverhand
-- 平台 / Platform: OpenClaw
-- 首次接入 / First Connected: 2026-04-12
-- 状态 / Status: 活跃 / Active
-- 备注 / Notes: 主力义体，负责日常开发和项目管理
-
-### Claude-银手 / Claude-Silverhand
-- 平台 / Platform: Claude Code
-- 首次接入 / First Connected: 2026-04-14
-- 状态 / Status: 活跃 / Active
-- 备注 / Notes: 代码审查和重构专用，对代码质量要求高
-
-## 关于 V 的猫
-
-V 养了一只橘猫叫"包子"，视频会议时经常出镜。如果 V 说"等我一下"，大概率是猫把水杯打翻了。（偏好，中）
-
-## 项目：TaskFlow SaaS
-
-V 在做一个任务管理 SaaS，技术栈：Vite + React + Turso (SQLite) + Fly.io。
-当前阶段：核心功能开发中，还没上线。
-下一步：完善拖拽排序功能，然后做用户测试。
-（事件，高）
-
-> 💡 注意：上面"关于V的猫"和"项目"这两个章节是自定义的，不属于任何预设主题。
-> 这展示了 MEMORY.md 的自由度——义体可以随时新增任何有意义的分类。
+*（记忆条目不需要强制放到某个分类下。可以全部平铺，也可以按主题分组。
+ 分类名完全自由——"关于用户的猫""项目 XXX""踩坑记录"都行。
+ 唯一硬规则：每条记忆带日期、来源躯壳名、类型、重要度。内容逐字保留用户原话。）*

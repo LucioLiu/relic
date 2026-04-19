@@ -25,8 +25,10 @@
 > What is this AI called?
 
 ---
-以下为可选条目。按需填写，也可以自己加新条目。
-Below are optional sections. Fill as needed, or add your own.
+以下分类名只是参考，不是固定格式。以信息100%保留、灵魂完整性为第一优先。
+没有合适分类？自己新建 ## 标题。内容比格式重要。
+Below are suggested categories — NOT a rigid template. 100% information preservation is priority #1.
+No matching category? Create a new ## heading. Content > format.
 
 ## 一句话定义 / One-line Definition
 
