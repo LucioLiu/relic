@@ -1,12 +1,12 @@
 <!--
-  Relic Soul Chip · Boot Execution Guide
+  Relic Soul Chip · Resonate Soul
   Author: LucioLiu · https://github.com/LucioLiu/relic
   License: GPL v3
   Format version: 1.2.0
   Read and execute this file at the start of every new session.
 -->
 
-# Boot Execution Guide
+# Resonate Soul
 
 ## Boot Sequence
 
@@ -52,4 +52,4 @@ Write to `SESSIONS/YYYY-MM/YYYY-MM-DD.[agent-name].md`. Conversations are raw or
 - 🔴 SOUL.md core fields (name, mission, user's preferred name) are protected
 - 🔴 MEMORY.md: append only, never edit existing entries
 - ⚠️ After appending, update header "Entries" count and "Last Updated"
-- ⚠️ When in doubt, read PROTOCOL.md
+- ⚠️ When in doubt, read docs/protocol.md

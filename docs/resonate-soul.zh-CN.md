@@ -1,12 +1,12 @@
 <!--
-  Relic 灵魂芯片 · 启动执行手册
+  Relic 灵魂芯片 · 灵魂共鸣
   作者：LucioLiu · https://github.com/LucioLiu/relic
   许可证：GPL v3
   版本：1.2.0
   每次新会话开始时读取并执行此文件。
 -->
 
-# 启动执行手册 / Boot Execution Guide
+# 灵魂共鸣 / Resonate Soul
 
 ## 启动流程
 
@@ -44,7 +44,8 @@
 
 ## 会话结束前
 
-写入 `SESSIONS/YYYY-MM/YYYY-MM-DD.[躯壳名].md`。对话是底层矿石，丢了就没了。
+写入 `SESSIONS/YYYY-MM/YYYY-MM-DD.[躯壳名].md`。**这是与用户的完整原始对话日志，不是摘要。** 对话是底层矿石，丢了就没了。
+⚠️ MEMORY 是提炼过的知识（偏好/决策/经验），SESSIONS 是对话原文本身。两者不可互相替代。
 
 ## 🔴 关键规则速查
 
@@ -52,4 +53,4 @@
 - 🔴 SOUL.md 核心（名字、使命、用户称呼）受保护
 - 🔴 MEMORY.md 只追加，不改旧内容
 - ⚠️ 追加后更新头部条目数+更新时间
-- ⚠️ 有疑问读 PROTOCOL.md
+- ⚠️ 有疑问读 docs/protocol.zh-CN.md
