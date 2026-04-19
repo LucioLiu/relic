@@ -4,7 +4,7 @@
   Relic Soul Chip
   Author: LucioLiu · https://github.com/LucioLiu/relic
   License: GPL v3
-  Format version: 1.1.1
+  Format version: 1.1.2
   Backup before editing.
 -->
 
@@ -23,6 +23,25 @@ Each agent is both reader and writer — bidirectional sync, grow-only.
 ```
 
 ⚠️ Relic works best with high-quality models with 32K+ context. Models with very small context or low quality cannot follow this protocol correctly. Warn the user if detected.
+
+> **⚡ Mandatory Import Checklist — No Exceptions**
+>
+> Relic has **seven memory file categories** — all are mandatory:
+> 1. `SOUL.md` — Soul (who am I)
+> 2. `USER.md` — User (who are you)
+> 3. `MEMORY.md` — Memory (what happened)
+> 4. `SKILLS/` — Skills (learned abilities)
+> 5. `PROJECTS/` — Projects (work done)
+> 6. `SESSIONS/` — Sessions (raw conversation logs)
+> 7. `ARCHIVE/` — Archive (historical backups)
+>
+> **Rules**:
+> - During import, ALL 7 categories must be processed — even empty ones must be reported
+> - "No data" ≠ "skip allowed" → must report "Category N: 0 items"
+> - Omitting any category is forbidden; fabricating data is forbidden
+> - After import, report ALL 7 categories to the user item by item
+>
+> INBOX/ is an import buffer, not a memory file — not in this checklist.
 
 ---
 
@@ -62,7 +81,7 @@ Each agent is both reader and writer — bidirectional sync, grow-only.
    Check each of the seven memory files:
    a. SOUL.md — Core mission filled? Personality complete?
    b. USER.md — User preferences filled?
-   c. MEMORY.md — Imported from old host (if any)? Header entry count accurate?
+   c. MEMORY.md — Imported from old host (if any)? Header "Entries" count and "Last Updated" accurate?
    d. SKILLS/ — Imported from old host (if any)? Format correct?
    e. PROJECTS/ — Imported from old host (if any)? Format correct?
    f. SESSIONS/ — Directory created? Old conversations imported (if any)?
@@ -79,8 +98,7 @@ Each agent is both reader and writer — bidirectional sync, grow-only.
      current host: "Write key info from this conversation to Relic now."
    - "Conversations are raw ore — once lost, gone forever. Build the habit of having hosts write regularly."
 
-7. If you have existing memories, skills, or conversations about this user, execute Scenario A full import (see Section 6)
-   Scenario A covers import of all seven memory file categories.
+7. Scan all your persistent storage for any existing memories, skills, or conversations about this user. Regardless of how much you find, you MUST execute Scenario A full import (see Section 6). Scenario A covers import of all seven memory file categories — every category must be processed, none may be skipped.
 ```
 
 ⚠️ Hosts with < 32K context are not suitable for Relic. Warn user and suggest removal if detected.
@@ -136,6 +154,7 @@ SESSIONS is "raw ore" — original content never processed by anyone. Anything s
 Step 0: Version Check (once per session)
   → Read brain/.relic-version to get local version
   → Use HTTP request to fetch https://raw.githubusercontent.com/LucioLiu/relic/main/brain/.relic-version
+  → Only this single HTTP request is allowed. No other network access is required or permitted by this protocol.
   → If network request fails, skip and tell user "⚠️ Cannot check for Relic updates"
   → Version differs? Ask user whether to update. Updates only replace protocol and template files —
     your personal files (SOUL.md, USER.md, MEMORY.md, SKILLS/, PROJECTS/, SESSIONS/, ARCHIVE/) won't be touched.
@@ -158,10 +177,10 @@ Step 4: Read MEMORY.md (read entire file, top to bottom)
   → Agent Registry section: newly connecting agent should append an entry
 
 Step 5: Sync new memories from Relic to your own memory file
-  Quick check: compare MEMORY.md header "Entries" with actual ## heading count — if same, skip
+  Quick check: compare MEMORY.md header "Entries" and "Last Updated" with actual ## heading count — if same, skip
   Append with source tag: [fromRelic/originalAgentName]
 
-Step 6: Verify MEMORY.md header "Entries" count matches actual count; fix if inconsistent
+Step 6: Verify MEMORY.md header "Entries" count matches actual count; update "Last Updated" to current date; fix if inconsistent
 
 Step 7: If MEMORY.md exceeds 200 lines, ask user whether to consolidate
 
@@ -171,7 +190,8 @@ Step 8: Skills & Projects Alignment
 
 Step 9: Operate normally
   → Interact according to SOUL.md personality
-  → After appending memories, remember to update MEMORY.md header "Entries" count
+  → After appending memories, remember to update MEMORY.md header "Entries" count and "Last Updated" to current date
+  ⚠️ Before ending the session, you MUST write the current conversation to SESSIONS/. Conversations are raw ore — once lost, gone forever.
 
 Extra Rules:
   → If user mentions something you don't recall, actively read MEMORY.md or ARCHIVE/
@@ -266,7 +286,7 @@ The following MUST be confirmed with user before recording:
 - 📄 Private document contents
 - 🧬 Anything user explicitly marks as confidential
 
-After appending memories, **must** update MEMORY.md header "Entries" count.
+After appending memories, **must** update MEMORY.md header "Entries" count and "Last Updated" to current date.
 
 ---
 
@@ -316,11 +336,22 @@ Same: ask the user before importing large projects.
 
 ### Scenario A: Full Import (Empty Relic + Agent with Memory)
 
+**Pre-flight checklist — 7 memory file categories (must verify ALL before starting):**
+1. `SOUL.md` — Soul (who am I)
+2. `USER.md` — User (who are you)
+3. `MEMORY.md` — Memory (what happened)
+4. `SKILLS/` — Skills (learned abilities)
+5. `PROJECTS/` — Projects (work done)
+6. `SESSIONS/` — Sessions (raw conversation logs)
+7. `ARCHIVE/` — Archive (historical backups)
+
 ```
 Step 1: Inventory — tell the user what you're moving
-  Scan all your persistent content and list it:
+  Scan all your persistent storage for content about this user. List what you found:
   - Memories (N entries), Skills (N), Conversations (N files), Projects (N)
+  If a category genuinely has no content, report "Category N: 0 items (no old data)" — never omit, never fabricate.
   ⚠️ Must wait for user confirmation before starting.
+  ✅ Completion Check: All 7 categories listed (including zeros), user has confirmed.
 
 Step 2: Import memories → MEMORY.md
   ⚠️ Raw source files are the fidelity baseline. Format conversion is refinement, not compression.
@@ -329,28 +360,41 @@ Step 2: Import memories → MEMORY.md
   3. Fidelity rules: preference/decision preserve verbatim, experience can condense but keep key params, events can summarize
   4. Ask user about sensitive information
   5. Sort by timestamp, earliest first
-  6. After writing, count ## headings, update header "Entries" count
+  6. After writing, count ## headings, update header "Entries" count and "Last Updated" to current date
+  ✅ Completion Check: MEMORY.md written, Entries count accurate, Last Updated set.
 
 Step 3: Import skills → SKILLS/
-  Bring: methodology skills (work habits, user-defined templates, judgment rules)
-  Skip: platform-specific tools (scripts needing runtime, tools depending on specific APIs)
+  Scan and report: bring methodology skills (work habits, user-defined templates, judgment rules).
+  Do NOT bring: platform-specific tools (scripts needing runtime, tools depending on specific APIs).
   Unsure: ask user. For mixed content, bring only methodology part.
+  ✅ Completion Check: Skills imported or "0 items" reported. Format verified.
 
 Step 4: Import conversations → SESSIONS/
   Organize by YYYY-MM/, original content unchanged and unsummarized.
-  If old agent has no persistent conversation mechanism, skip this step.
+  If old agent has no persistent conversation mechanism, report "Unable to retrieve old conversations". Do NOT skip the archive step.
+  ✅ Completion Check: Conversations imported or reason reported. SESSIONS/ directory created.
 
 Step 5: Import projects → PROJECTS/
   Identify projects from memories and conversations, classify by portability:
   - No special environment dependency → portable: move all files
   - Partial dependency → partially portable: move generic files, text descriptions for platform-specific
   - Fully dependent → non-portable: create .md record file only
+  ✅ Completion Check: Projects imported or "0 items" reported.
 
 Step 6: Cleanup and Confirmation
   1. Fidelity check: original vs converted, warn if compression exceeds 50%
   2. Archive originals: move INBOX/ source files to ARCHIVE/raw/ (never delete)
-  3. Update MEMORY.md header "Entries" count
-  4. Report full import statistics to user (list everything, don't omit)
+  3. Update MEMORY.md header "Entries" count and "Last Updated" to current date
+  4. ✅ Final Report — Must report ALL 7 categories to the user, including those with "0 items". Omitting any category is forbidden.
+     Format:
+     1. SOUL.md — [status]
+     2. USER.md — [status]
+     3. MEMORY.md — [N entries imported]
+     4. SKILLS/ — [N skills imported]
+     5. PROJECTS/ — [N projects imported]
+     6. SESSIONS/ — [N sessions imported]
+     7. ARCHIVE/ — [source files archived]
+     If a category genuinely has no content to import, report "Category N: 0 items (no old data)" — never omit, never fabricate.
 ```
 
 ### Scenario B: Inject (Relic with Content + Empty Agent)
@@ -466,6 +510,15 @@ The anchor is just a signpost. Protocol changes → anchor doesn't need updating
 2. Concrete numbers for conditions ("exceeds 200 lines" beats "feels too large")
 3. Every boot checks consolidation
 4. State "sync not replace"
+
+### Anchor Target Whitelist (Only These Files May Be Modified)
+- OpenClaw → AGENTS.md
+- Claude Code → CLAUDE.md
+- Hermes → config file or prompt template
+- OpenCode → WORK_RULES.md or instructions
+- Cursor → .cursorrules
+⚠️ Anchors may ONLY be written to the files listed above. Do not write to any other file. Do not modify any Relic file.
+You must show the anchor content to the user and get explicit permission before planting.
 
 ### Anchor Locations
 - OpenClaw → AGENTS.md
