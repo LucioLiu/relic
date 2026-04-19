@@ -4,7 +4,7 @@
   Relic Soul Chip
   Author: LucioLiu · https://github.com/LucioLiu/relic
   License: GPL v3
-  Format version: 1.1.3
+  Format version: 1.1.4
   Backup before editing.
 -->
 
@@ -43,6 +43,19 @@ Each agent is both reader and writer — bidirectional sync, grow-only.
 >
 > INBOX/ is an import buffer, not a memory file — not in this checklist.
 
+> 🔴 **Import Quick Reference Card (re-read this table during Scenario A execution)**
+>
+> | Step | Key Action | Red Line |
+> |------|-----------|----------|
+> | Inventory | Scan your storage first, **then ask user to confirm** | Do not decide import scope yourself |
+> | SOUL | **Copy original text directly**, do not summarize or rewrite | Compressing details = violation |
+> | MEMORY | Preference/decision preserve verbatim, experience can condense | Dropping key parameters = violation |
+> | SKILLS | Only move user-created skill files, one folder per skill | Self-summarized "methodology" is NOT a skill |
+> | SESSIONS | Ask user for old conversation locations, save in full (never summarize) | Current session does NOT count as old |
+> | PROJECTS | Ask user what to move per project, folders must have substantive content | Title + one line only = not acceptable |
+> | Report | Report all 7 categories item by item, including "0 items" ones | Omitting any category = failure |
+> | Sensitive info | Already in old host = can migrate (tag "verified source"), newly discovered = must ask user |
+
 ---
 
 ## 0. First-time Setup
@@ -65,6 +78,12 @@ Each agent is both reader and writer — bidirectional sync, grow-only.
 2. Help user fill in SOUL.md and USER.md
    ⚠️ Must be as complete as possible — do NOT shortcut by only filling the name
    If user has AI settings/role definitions/prompts from other platforms, ALL must be migrated
+   🔴 SOUL.md Fidelity Iron Rule:
+   - If old host has a complete soul definition file, **copy the original text directly** — do NOT summarize or rewrite
+   - Only restructure when old content cannot directly map to template fields
+   - When restructuring, preserve ALL detail descriptions — do NOT compress into summaries
+   - Content that doesn't fit the template goes in "Other" section or file end — **NEVER discard**
+   - Original files MUST be archived to ARCHIVE/raw/ for cross-reference
 
 3. Plant anchor (mandatory, see Section 9). Before planting, explain to user:
    "The anchor is a short text block in your host's config file. It ensures every new session
@@ -278,13 +297,22 @@ Must do: 1. Tag source 2. Preserve original timestamp 3. Preserve original type 
 
 ### Sensitive Information
 
-The following MUST be confirmed with user before recording:
-- 🔑 Passwords, API keys, Tokens
-- 📱 Phone numbers, email addresses
-- 🏠 Home/work addresses
-- 💳 Financial info
-- 📄 Private document contents
-- 🧬 Anything user explicitly marks as confidential
+⚠️ **Distinguish two scenarios:**
+
+**Scenario 1: Migrating existing data** (information user already provided to old host)
+- If sensitive info already exists in old host files (e.g., workspace/ memory, user profiles)
+- Can migrate directly to Relic, tagged with `Source: existing data from old host`
+- No need to re-ask the user — they already confirmed it before
+
+**Scenario 2: First-time entry** (sensitive info you newly discover during work)
+- The following MUST be confirmed with user before recording:
+  - 🔑 Passwords, API keys, Tokens
+  - 📱 Phone numbers, email addresses
+  - 🏠 Home/work addresses
+  - 💳 Financial info
+  - 📄 Private document contents
+  - 🧬 Anything user explicitly marks as confidential
+- Not sure which scenario? → Treat as first-time entry, ask user first.
 
 After appending memories, **must** update MEMORY.md header "Entries" count and "Last Updated" to current date.
 
@@ -295,6 +323,15 @@ After appending memories, **must** update MEMORY.md header "Entries" count and "
 ### Skills (SKILLS/)
 Each skill gets its own folder. Folder name = skill name. What goes inside is up to the user — plain text .md, code files, configs, anything.
 Only requirement: at least one .md file describing the skill.
+
+⚠️ **What counts as a "skill"? Only these two categories:**
+1. **User-created skill files**: Skills the user actively wrote in the old host — skill files, workflow templates, custom prompts, etc.
+2. **Documented methodologies**: Dedicated documents (NOT experience from conversation logs) describing a specific workflow
+
+**NOT skills (do NOT import to SKILLS/):**
+- Lessons learned from conversation logs → That's memory, put in MEMORY.md
+- AI's own summarized "methodology" → That's your own understanding, not the user's skill
+- Platform-specific tools (scripts needing specific runtimes) → Do not import
 
 ```
 SKILLS/
@@ -346,12 +383,16 @@ Same: ask the user before importing large projects.
 7. `ARCHIVE/` — Archive (historical backups)
 
 ```
-Step 1: Inventory — tell the user what you're moving
-  Scan all your persistent storage for content about this user. List what you found:
-  - Memories (N entries), Skills (N), Conversations (N files), Projects (N)
+Step 1: Inventory — scan yourself first, then ask user to confirm
+  🔴 First: Scan all your persistent storage (memory/, workspace/, skills/ directories, etc.). List what you found:
+  - Soul settings (N items), User preferences (N items), Memories (N entries), Skill files (N), Conversation files (N), Project files (N), Archive files (N)
+  - Also list the data source locations (e.g., "~/.openclaw/workspace/memory/ has 42 files")
+  🔴 Then: Show the list to user and ask two questions:
+  1. "Above is all the old data I found. Import everything? Or would you like to be selective?"
+  2. "Are there any data sources I can't access that you'd like to add? (e.g., local files, exports from other platforms)"
   If a category genuinely has no content, report "Category N: 0 items (no old data)" — never omit, never fabricate.
   ⚠️ Must wait for user confirmation before starting.
-  ✅ Completion Check: All 7 categories listed (including zeros), user has confirmed.
+  ✅ Completion Check: All 7 categories listed with quantities? User confirmed? Any category skipped? (Skipped = failure)
 
 Step 2: Import memories → MEMORY.md
   ⚠️ Raw source files are the fidelity baseline. Format conversion is refinement, not compression.
