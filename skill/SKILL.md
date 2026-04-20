@@ -105,6 +105,12 @@ These files detect whether the user's Relic is empty or populated, then route to
 | `SKILL.md` | This file — registry descriptor and documentation |
 | `AGENT.md` | Agent entry point — scenario detection and routing (English) |
 | `AGENT.zh-CN.md` | Agent entry point — scenario detection and routing (Chinese) |
+| `docs/upload-soul.md` | Scenario A: Upload Soul — full step-by-step (English) |
+| `docs/upload-soul.zh-CN.md` | Scenario A: Upload Soul — full step-by-step (Chinese) |
+| `docs/load-soul.md` | Scenario B: Load Soul — full step-by-step (English) |
+| `docs/load-soul.zh-CN.md` | Scenario B: Load Soul — full step-by-step (Chinese) |
+| `docs/resonate-soul.md` | Daily boot sequence (English) |
+| `docs/resonate-soul.zh-CN.md` | Daily boot sequence (Chinese) |
 
 Full documentation, setup guides, and example brain files: https://github.com/LucioLiu/relic
 
