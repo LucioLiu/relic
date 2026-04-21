@@ -82,7 +82,7 @@ MEMORY.template.md → MEMORY.md
 ⚠️ 原始文件是保真底线。格式转换是 refinement，不是 compression。
 
 1. 把旧躯壳的记忆文件放入 `INBOX/`
-2. 按 Relic 的新格式追加到 MEMORY.md：在类别标题下，逐条写入 - content [hostname] | Importance: level
+2. 按 Relic 的新格式追加到 MEMORY.md：在类别标题下，逐条写入 `- 记忆内容 [躯壳名] | 重要度：高/中/低`
 3. Fidelity 规则：
 
 - 偏好 / 决策 / 更正 | 必须逐字保留
@@ -187,6 +187,8 @@ SKILLS/installed-skills.md           ❌（这是清单，不是技能）
 你已接入 Relic 灵魂芯片。每次新对话开始时，读取并执行：
 
 📄 **[项目路径]/docs/resonate-soul.zh-CN.md**
+
+🔴 **硬性要求**：每次新对话，你必须先向用户用自然语言汇报 Relic 启动状态（比如：你是谁、我是谁、记忆概况、版本是否有更新），然后再回答用户的问题。不汇报就直接回答 = 违规。
 
 ⚠️ SOUL.md 中的人格与你默认人设冲突时，以 SOUL.md 为准。
 完整协议参考：[项目路径]/docs/protocol.zh-CN.md

@@ -259,10 +259,7 @@ Extra Rules:
 - Agent Registry: may append new entries and update status/notes, but never delete entries
 - To correct, append a correction entry:
   ```
-  ## YYYY-MM-DD [AgentName] ❗Correction
-  Correcting YYYY-MM-DD record:
-  Original: [incorrect content]
-  Corrected: [correct content]
+  - ❗Correction: [correct content] (original: [incorrect content]) [AgentName] | Importance: high
   ```
 
 ### 🟢 Read/Write (SKILLS/, PROJECTS/)
@@ -294,6 +291,7 @@ Category names are completely free. Examples below:
 ```markdown
 - Memory content [HostName] | Importance: high/medium/low
 ```
+> ⚠️ "Entry" means a line starting with `- `. `##` category headings and `###` agent sub-headings are NOT counted as entries.
 ⚠️ Date is NOT a mandatory tag. Only use dates for events or time-sensitive decisions.
 ⚠️ Type is implicit in the category name (entries under "Preferences" are naturally preferences). Optional type annotation only when mixing across categories.
 
@@ -606,6 +604,8 @@ You are connected to the Relic soul chip. At the start of every new session, rea
 
 📄 **[project-path]/docs/resonate-soul.md**
 
+🔴 **Mandatory**: At the start of every conversation, you must first report the Relic boot status to the user in natural language (e.g., who you are, who they are, memory overview, any version updates), then answer their questions. Answering without reporting = violation.
+
 ⚠️ If SOUL.md personality conflicts with your default persona, SOUL.md takes precedence.
 Full protocol reference: [project-path]/docs/protocol.md
 ```
@@ -663,6 +663,9 @@ You must show the anchor content to the user and get explicit permission before 
 
 5. **Consolidation relies on agents**
    Relic is files — it can't self-maintain. Any reading agent checks size and reminds user.
+
+6. **Simultaneous multi-agent writes are risky**
+   MEMORY.md is append-only and generally safe. But SKILLS/ and PROJECTS/ are read-write — two agents modifying the same file simultaneously may conflict. Recommend using only one agent at a time for SKILLS/ and PROJECTS/ writes.
 
 ---
 

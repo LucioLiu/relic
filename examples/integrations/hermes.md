@@ -19,7 +19,10 @@
 
 > 💡 以下为简化版锚点。完整版（含轻量模式、断开指引）见 `docs/protocol.zh-CN.md` 第九节。
 
-在 Hermes 的 **配置文件或 prompt 模板** 中加入以下内容：
+在 Hermes 的 **配置文件** 中加入以下内容。推荐位置（按优先级）：
+1. `~/.hermes/config.yaml` 的 `system_prompt` 字段（最可靠，每次会话都会读取）
+2. 项目级 `.hermes/rules.md` 文件（适合项目级使用）
+3. `~/.hermes/SOUL.md`（如果 Hermes 版本支持）
 
 ```markdown
 ## ⚡ Relic 灵魂芯片
@@ -59,6 +62,8 @@
   → 根据 SOUL.md 的人格与用户交互
   → 根据任务需要按需加载 SKILLS/ 和 PROJECTS/
   → ⚠️ 追加记忆后记得更新 MEMORY.md 头部的实际列表项数量
+
+🔴 **硬性要求**：执行完以上步骤后，你必须先向用户用自然语言汇报启动状态（比如：你是谁、我是谁、记忆概况、版本是否有更新），然后再回答用户的问题。不汇报就直接回答 = 违规。
 
 完整协议：[Relic项目路径]/docs/protocol.zh-CN.md
 ```

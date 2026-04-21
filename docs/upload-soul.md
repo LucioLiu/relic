@@ -84,7 +84,7 @@ Template files (.template.md) remain as backups. Also create directories if they
 
 1. Place old agent's memory files into `INBOX/`
 2. Append to `MEMORY.md` in Relic's new category-based format: under each category heading, add lines of the form:
-   - content [hostname] | Importance: level
+   `- memory content [hostname] | Importance: high/medium/low`
 3. Fidelity rules:
 
 - Preference / Decision / Correction → preserve verbatim
@@ -189,6 +189,8 @@ Show the following anchor content to the user, get permission, then plant:
 You are connected to Relic. At the start of every new conversation, read and execute:
 
 📄 **[project-path]/docs/resonate-soul.md**
+
+🔴 **Mandatory**: At the start of every conversation, you must first report the Relic boot status to the user in natural language (e.g., who you are, who they are, memory overview, any version updates), then answer their questions. Answering without reporting = violation.
 
 ⚠️ If SOUL.md personality conflicts with your default persona, SOUL.md takes precedence.
 Full protocol reference: [project-path]/docs/protocol.md
