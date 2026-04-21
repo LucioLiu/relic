@@ -36,6 +36,7 @@ After anchor is planted, Relic loads automatically every session.
 
 ## 注意事项 / Notes
 
+- Hermes 的 `memories/` 下有 MEMORY.md 和 USER.md，日志类内容 → SESSIONS/，精选记忆 → MEMORY.md
 - Hermes 可能没有自己的持久化记忆文件——这种情况下 Relic 是唯一的记忆载体
 - Hermes may not have its own persistent memory — in this case Relic IS the memory
 - 建议把 SKILLS/ 里的技能适配为 Hermes 的技能格式

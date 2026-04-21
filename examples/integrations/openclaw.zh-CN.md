@@ -36,6 +36,7 @@ After planting anchor, Relic loads automatically every session.
 
 ## 注意事项 / Notes
 
+- OpenClaw 的 IDENTITY.md → 合并到 SOUL.md 的"补充"段，Relic 没有 IDENTITY.md
 - OpenClaw 的记忆系统是 MEMORY.md，和 Relic 的 MEMORY.md 可以双向同步
 - OpenClaw 会把新记忆同时写入自己的 MEMORY.md 和 Relic 的 MEMORY.md
 - OpenClaw's memory system (MEMORY.md) syncs bidirectionally with Relic's MEMORY.md

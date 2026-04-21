@@ -26,11 +26,11 @@ Fill them in (or ask your agent to help).
 
 ### Step 2: Neural Anchor
 
-> 💡 Below is a simplified anchor. The full version (with lightweight mode and disconnect instructions) is in `brain/docs/protocol.md` Section 9.
+> 💡 Below is a simplified anchor. The full version (with lightweight mode and disconnect instructions) is in `docs/protocol.md` Section 9.
 Find your agent's **core startup file** — the file it reads every session.
 Add this to that file:
 
-> 💡 **Tip**: If your agent prefers Chinese, use the anchor template from `docs/protocol.md` (Chinese version). For English, use the template below. / 如果你的躯壳偏好中文，使用 `docs/protocol.md` 里的锚点模板。
+> 💡 **Tip**: If your agent prefers Chinese, use the anchor template from `docs/protocol.zh-CN.md`. For English, use the template below. / 如果你的躯壳偏好中文，使用 `docs/protocol.zh-CN.md` 里的锚点模板。
 
 ```markdown
 ## ⚡ Relic Soul Chip
@@ -57,10 +57,10 @@ Step 2: Read [brain-path]/SOUL.md
 Step 3: Read [brain-path]/USER.md
 Step 4: Read [brain-path]/MEMORY.md (read entire file, top to bottom)
 Step 5: Sync new memories from Relic to your own memory file
-  Quick check: compare MEMORY.md header "Entries" with actual ## heading count — if same, skip sync
+  Quick check: compare MEMORY.md header "Entries" with actual list items (lines starting with -) — if they match, skip sync
   "Your own memory file" means your platform's long-term memory (e.g., CLAUDE.md, memory logs, etc.). If unsure where to write, ask the user.
   → Append with source tag: [fromRelic/originalAgentName]
-Step 6: Verify MEMORY.md header "Entries" count matches actual count
+Step 6: Verify MEMORY.md header "Entries" count matches actual list items count
   → Fix if inconsistent (skip this step during Scenario B first injection)
 Step 7: If MEMORY.md exceeds 200 lines:
   → Tell user "Relic memory file is large, consolidation recommended. Consolidate now?"
