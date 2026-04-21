@@ -29,7 +29,7 @@
 - `USER.md` — Your preferences, habits, and communication style
 - `MEMORY.md` — Structured long-term memory (preferences, decisions, experiences — extracted knowledge, not raw chat)
 - `SKILLS/` — Reusable skills and workflows your AI has learned
-- `PROJECTS/` — Documents for ongoing projects
+- `PROJECTS/` — Documents for ongoing or completed plans
 - `SESSIONS/` — Full raw conversation transcripts with the user (preserved forever)
 - `ARCHIVE/` — Archived memories when files get too long (originals never deleted)
 
@@ -94,6 +94,7 @@ Every session from now on starts automatically. Your AI tools share a soul, memo
 - SESSIONS/: Raw conversations never deleted
 - Sensitive info: AI asks before recording passwords, phone numbers, etc.
 - All data stays local — nothing uploaded anywhere
+- **Known limitation**: Skill files may not be directly portable across platforms due to different tool formats. Relic syncs skill descriptions, not platform-specific implementations.
 
 ---
 
