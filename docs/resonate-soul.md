@@ -2,7 +2,7 @@
   Relic Soul Chip · Resonate Soul
   Author: LucioLiu · https://github.com/LucioLiu/relic
   License: GPL v3
-  Format version: 1.2.0
+  Format version: 1.3.0
   Read and execute this file at the start of every new session.
 -->
 

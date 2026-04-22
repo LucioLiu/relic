@@ -4,7 +4,7 @@
   Relic Soul Chip
   Author: LucioLiu · https://github.com/LucioLiu/relic
   License: GPL v3
-  Format version: 1.2.0
+  Format version: 1.3.0
   Backup before editing.
 -->
 

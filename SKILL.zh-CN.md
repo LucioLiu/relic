@@ -1,7 +1,7 @@
 ---
 name: relic-soul-chip
 description: "Relic 灵魂芯片——让你的 AI Agent 拥有跨会话的持久人格和记忆。纯 Markdown，人类可读。换躯壳，灵魂跟着走。"
-version: "1.2.0"
+version: "1.3.0"
 author: LucioLiu
 license: GPL-3.0
 homepage: "https://github.com/LucioLiu/relic"

@@ -196,7 +196,7 @@ Based on real OpenClaw testing of v1.0.4, 27 issues were identified and addresse
 - Anti-idiot notes in all directory READMEs
 
 ### Version Unification
-- All version strings unified to 1.2.0 (1.1.1 superseded; see v1.1.1 changes for history)
+- All version strings unified to 1.3.0 (1.1.1→1.2.0 history in older paragraphs; 1.3.0 adds alignment check and structured boot report)
 
 ---
 

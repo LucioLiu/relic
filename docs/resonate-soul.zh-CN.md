@@ -2,7 +2,7 @@
   Relic 灵魂芯片 · 灵魂共鸣
   作者：LucioLiu · https://github.com/LucioLiu/relic
   许可证：GPL v3
-  版本：1.2.0
+  版本：1.3.0
   每次新会话开始时读取并执行此文件。
 -->
 

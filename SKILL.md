@@ -1,7 +1,7 @@
 ---
 name: relic-soul-chip
 description: "Relic Soul Chip — Persistent AI personality and cross-agent memory via pure Markdown. Switch hosts, keep the soul. Zero deps."
-version: "1.2.0"
+version: "1.3.0"
 author: LucioLiu
 license: GPL-3.0
 homepage: "https://github.com/LucioLiu/relic"

@@ -4,7 +4,7 @@
   Relic 灵魂芯片 · Soul Chip
   作者：LucioLiu · https://github.com/LucioLiu/relic
   许可证：GPL v3
-  格式版本：1.2.0
+  格式版本：1.3.0
   编辑此文件前请先备份。
 -->
 
