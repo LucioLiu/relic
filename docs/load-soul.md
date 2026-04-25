@@ -20,7 +20,7 @@ Choose a transfer strategy based on capacity:
 
 ## B-1. Execute Boot Sequence
 
-Read and execute all steps in `docs/resonate-soul.md` (Steps 0-8).
+Read and execute the **read-only steps** in `docs/resonate-soul.md` (Steps 0-4: version check, SESSIONS check, read SOUL, read USER, read MEMORY). Steps 5-7 involve write operations and are deferred until after B-3.
 
 🔴 **Do NOT modify any Relic files during initialization.** Read-only for now.
 
@@ -31,11 +31,14 @@ Boot sequence summary:
 4. **Step 3**: Read USER.md → who is the user
 5. **Step 4**: Read MEMORY.md in full. >200 lines: suggest consolidation, >400 lines: must consolidate first
 6. **Step 5**: Sync new Relic memories to yourself, tag with `[from Relic/original-host-name]`
-7. **Step 6**: Update MEMORY.md header: update time + verify entry count
-8. **Step 7**: Bidirectional sync for SKILLS/ and PROJECTS/
-9. **Step 8**: Normal operation
+7. **Step 5.5**: Seven-file alignment check (includes SKILLS/PROJECTS bidirectional sync)
+8. **Step 6**: Update MEMORY.md header: update time + verify entry count
+9. **Step 7**: MEMORY.md consolidation check (over 200 lines: suggest consolidation)
+10. **Step 8**: Normal operation
 
 ## B-2. Soul Injection
+
+> ⚡ **Read-only initialization phase complete.** You may now append to Relic per protocol.
 
 Write SOUL.md content into your core configuration file.
 
@@ -156,7 +159,7 @@ Full protocol: [project-path]/docs/protocol.md
 From now on, read `docs/resonate-soul.md` at the start of every session. Full protocol reference: `docs/protocol.md`
 
 ⚠️ **Quick Rules Reference**:
-- 🔴 Never modify ARCHIVE/ or SESSIONS/
+- 🔴 Never modify or delete any file in ARCHIVE/. SESSIONS/ files must not be modified or deleted, but creating new session records is allowed.
 - 🔴 SOUL.md core fields (name, mission, user address) are protected
 - 🔴 MEMORY.md is append-only — never edit old content
 - ⚠️ After appending, update header entry count + last updated time
