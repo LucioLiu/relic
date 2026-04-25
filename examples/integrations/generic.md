@@ -1,11 +1,9 @@
-# 通用 Agent 接入指南 / Generic Agent Integration
+# Generic Agent Integration
 
-## 你的 Agent 不在列表里？没关系。/ Your agent isn't listed? No problem.
+## Your agent isn't listed? No problem.
 
-Relic 的核心设计就是"任何 Agent 都能接入"。
 Relic is designed so any agent can connect.
 
-只要你的 Agent 能**读取本地文件**，就能接入 Relic。
 As long as your agent can **read local files**, it can use Relic.
 
 > ⚠️ **Prerequisite**: Make sure your agent can access the brain directory (readable file path).
@@ -13,7 +11,7 @@ As long as your agent can **read local files**, it can use Relic.
 
 ---
 
-## 接入步骤 / Integration Steps
+## Integration Steps
 
 ### Step 1: Initialize
 Copy template files, remove `.template` suffix:
@@ -30,7 +28,7 @@ Fill them in (or ask your agent to help).
 Find your agent's **core startup file** — the file it reads every session.
 Add this to that file:
 
-> 💡 **Tip**: If your agent prefers Chinese, use the anchor template from `docs/protocol.zh-CN.md`. For English, use the template below. / 如果你的躯壳偏好中文，使用 `docs/protocol.zh-CN.md` 里的锚点模板。
+> 💡 **Tip**: If your agent prefers Chinese, use the anchor template from `docs/protocol.zh-CN.md`. For English, use the template below.
 
 ```markdown
 ## ⚡ Relic Soul Chip
@@ -97,7 +95,7 @@ If it answers correctly, you're connected.
 
 ---
 
-## 导入旧记忆 / Import Old Memories
+## Import Old Memories
 
 1. Place your agent's old memory files in `brain/INBOX/`
 2. Tell your agent: "Read INBOX/ files, extract key info, append to MEMORY.md per docs/protocol.md"

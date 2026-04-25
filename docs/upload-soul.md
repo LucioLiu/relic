@@ -92,7 +92,7 @@ Template files (.template.md) remain as backups. Also create directories if they
 - Event → can summarize
 - Mood → can compress context
 
-⚠️ 不确定就逐字保留。丢了找不回来。
+⚠️ When in doubt, preserve verbatim. Lost data cannot be recovered.
 
 4. Ask user about sensitive information (see "Sensitive Information" below)
 5. Sort by category order, not by timestamp

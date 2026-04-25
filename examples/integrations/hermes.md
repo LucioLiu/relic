@@ -1,106 +1,106 @@
-# Hermes 接入 Relic 指南
+# Hermes Integration Guide
 
-> ⚠️ **前提 / Prerequisite**: 确保 Agent 能访问 brain 目录（文件路径可读）。如果 Agent 运行在容器/沙箱中，需要挂载 brain 目录。
+> ⚠️ **Prerequisite**: Make sure the agent can access the brain directory (readable file path). If the agent runs in a container/sandbox, you need to mount the brain directory.
 
-## 第一步：初始化 Relic
+## Step 1: Initialize Relic
 
-如果这是第一次使用：
-1. 复制模板文件，去掉 `.template` 后缀：
+If this is your first time:
+1. Copy template files, remove the `.template` suffix:
    - `SOUL.template.md` → `SOUL.md`
    - `USER.template.md` → `USER.md`
    - `MEMORY.template.md` → `MEMORY.md`
-2. 填写 SOUL.md 和 USER.md（可以请 Hermes 帮你填）
+2. Fill in SOUL.md and USER.md (you can ask Hermes to help)
 
-如果已有 Hermes 的记忆：
-1. 把 Hermes 的记忆/配置文件放入 `brain/INBOX/`
-2. 然后进行第二步
+If you already have Hermes memories:
+1. Put Hermes's memory/config files into `brain/INBOX/`
+2. Then proceed to Step 2
 
-## 第二步：植入锚点（关键步骤）
+## Step 2: Plant Anchor (Critical Step)
 
-> 💡 以下为简化版锚点。完整版（含轻量模式、断开指引）见 `docs/protocol.zh-CN.md` 第九节。
+> 💡 Below is a simplified anchor. The full version (with lightweight mode and disconnect instructions) is in `docs/protocol.md` Section 9.
 
-在 Hermes 的 **配置文件** 中加入以下内容。推荐位置（按优先级）：
-1. `~/.hermes/config.yaml` 的 `system_prompt` 字段（最可靠，每次会话都会读取）
-2. 项目级 `.hermes/rules.md` 文件（适合项目级使用）
-3. `~/.hermes/SOUL.md`（如果 Hermes 版本支持）
+Add the following to Hermes's **config file**. Recommended locations (by priority):
+1. `system_prompt` field in `~/.hermes/config.yaml` (most reliable, read every session)
+2. Project-level `.hermes/rules.md` file (for project-specific use)
+3. `~/.hermes/SOUL.md` (if your Hermes version supports it)
 
 ```markdown
-## ⚡ Relic 灵魂芯片
+## ⚡ Relic Soul Chip
 
-> 💡 这是什么？这是 Relic 的接入声明，让 AI 每次启动时读取你的个人设置和记忆。要停用？删除这段文字即可。详见 docs/protocol.zh-CN.md 第九节。
+> 💡 What is this? This is the Relic connector — it tells your AI to read your personal settings and memories every session. To disconnect, simply delete this text. See docs/protocol.md Section 9.
 
-你已接入 Relic 灵魂芯片。你的记忆有两个家：
-1. 你自己的记忆系统（自动维护）
-2. Relic 灵魂芯片（跨躯壳共享，由你维护）
+You are connected to the Relic soul chip. Your memory has two homes:
+1. Your own memory system (auto-maintained)
+2. Relic soul chip (shared across agents, maintained by you)
 
-⚠️ 这是同步更新，不是替换你的大脑。
-⚠️ 如果 SOUL.md 中的人格与你自带的默认人设冲突，以 SOUL.md 为准。
+⚠️ This is a sync update, not a brain replacement.
+⚠️ If SOUL.md personality conflicts with your default persona, SOUL.md takes priority.
 
-⚠️ 前置检查：如果是首次连接此躯壳，且该躯壳已有关于用户的记忆、技能或对话记录，先执行场景A完整导入（见 docs/protocol.zh-CN.md 第六节场景 A），然后再执行以下步骤。如果 Relic 文件还不存在，先执行首次设置（见 docs/protocol.zh-CN.md 〇节）。
+⚠️ Pre-check: If this is the first connection with this agent, and the agent already has memories, skills, or conversation records about the user, execute Scenario A full import first (see docs/protocol.md Section 6, Scenario A). If Relic files don't exist yet, run first-time setup (see docs/protocol.md Section 0).
 
-每次会话开始，按顺序执行以下步骤：
+At the start of every session, execute these steps IN ORDER:
 
-步骤1：查看 [Relic的brain路径]/SESSIONS/ 里你上次的对话是否已记录
-  → 如果遗漏且当前上下文还有内容：立即补充
-  → 如果遗漏但上下文已没有：告诉用户"上次对话未记录"
-  → 如果 SESSIONS/ 为空（首次）：跳过
-步骤2：读取 [Relic的brain路径]/SOUL.md
-  → 如果文件不存在：告诉用户需要先执行首次设置（见 docs/protocol.zh-CN.md 〇节）
-步骤3：读取 [Relic的brain路径]/USER.md
-步骤4：读取 [Relic的brain路径]/MEMORY.md（读全部，从上到下）
-步骤5：把 Relic MEMORY.md 中你不知道的新记忆，追加到你自己的记忆文件里
-  快速检查：看 MEMORY.md 头部的"条目数"和实际列表项（- 开头的行）数是否一致
-  "你自己的记忆文件"指 Hermes 的记忆工具或长期记忆文件。如果不确定往哪写，问用户。
-  → 追加时标注来源：[来自Relic/原躯壳名]
-步骤 5.5：七大文件对齐检查（详见 resonate-soul 步骤 5.5 对齐表）
-  → SOUL/USER 核心字段一致则跳过；SKILLS/PROJECTS 列文件夹名差异比对
-步骤6：检查 MEMORY.md 头部的"条目数"是否和实际列表项数量一致
-  → 不一致就修正（场景B首次注入时跳过此步骤）
-步骤7：如果 MEMORY.md 超过 200 行：
-  → 告诉用户"Relic 记忆文件较大，建议整理。是否现在整理？"
-  → 用户同意后执行整理流程（见 docs/protocol.zh-CN.md 第七节）
-  → 用户说"暂时不要"则本次跳过，下次启动再提醒
-步骤8：正常工作
-  → 根据 SOUL.md 的人格与用户交互
-  → ⚠️ 追加记忆后记得更新 MEMORY.md 头部的实际列表项数量
+Step 1: Check [brain-path]/SESSIONS/ for your last conversation log
+  → If missing and current context still has content: backfill immediately
+  → If missing and context no longer has content: tell user "Last session wasn't recorded"
+  → If SESSIONS/ is empty (first use): skip
+Step 2: Read [brain-path]/SOUL.md
+  → If file doesn't exist: tell user to run first-time setup first (see docs/protocol.md Section 0)
+Step 3: Read [brain-path]/USER.md
+Step 4: Read [brain-path]/MEMORY.md (read entire file, top to bottom)
+Step 5: Sync new memories from Relic that you don't know yet to your own memory file
+  Quick check: compare MEMORY.md header "Entries" with actual list items (lines starting with -)
+  "Your own memory file" refers to Hermes's memory tool or long-term memory file. If unsure where to write, ask the user.
+  → Append with source tag: [fromRelic/originalAgentName]
+Step 5.5: Seven-file alignment check (see resonate-soul Step 5.5 alignment table)
+  → Skip if SOUL/USER core fields match; diff-check SKILLS/PROJECTS folder names
+Step 6: Verify MEMORY.md header "Entries" count matches actual list items
+  → Fix if inconsistent (skip this step during Scenario B first injection)
+Step 7: If MEMORY.md exceeds 200 lines:
+  → Tell user "Relic memory file is large, consolidation recommended. Consolidate now?"
+  → If user agrees, execute consolidation (see docs/protocol.md Section 7)
+  → If user says "not now", skip for this session, remind again next boot
+Step 8: Work normally
+  → Interact according to SOUL.md personality
+  → ⚠️ After appending memories, remember to update MEMORY.md header "Entries" count
 
-🔴 **硬性要求**：执行完以上步骤后，你必须先汇报以下状态，然后再回答用户的问题。不汇报就直接回答 = 违规。
+🔴 **Mandatory**: After completing the above steps, you MUST report the following status before answering any user questions. Answering without reporting = violation.
 
-⚡ Relic 启动状态
-- 灵魂：[AI名字] — [一致 / 有差异]
-- 用户：[用户称呼] — [一致 / 有差异]
-- 记忆：[N]条 — [一致 / 差异说明]
-- 技能：[N]个 — [已对齐 / 差异说明]
-- 计划：[N]个 — [已对齐 / 差异说明]
-- 版本：[本地版本] / [远程最新 或 "未检查"]
-- 状态：[✅ 全部正常 / ⚠️ 有差异已同步 / ❌ 有问题需处理]
+⚡ Relic Startup Status
+- Soul: [AI name] — [Consistent / Differences]
+- User: [User address] — [Consistent / Differences]
+- Memory: [N] entries — [Consistent / Difference details]
+- Skills: [N] — [Aligned / Difference details]
+- Projects: [N] — [Aligned / Difference details]
+- Version: [Local version] / [Latest remote or "Not checked"]
+- Status: [✅ All normal / ⚠️ Differences synced / ❌ Issues need attention]
 
-完整协议：[Relic项目路径]/docs/protocol.zh-CN.md
+Full protocol: [project-path]/docs/protocol.md
 ```
 
-把 `[Relic的brain路径]` 替换成你的实际路径。
-常见路径：Linux `/home/你的用户名/relic/brain`，Mac `/Users/你的用户名/relic/brain`。
+Replace `[brain-path]` with your actual path.
+Common paths: Linux `/home/your-username/relic/brain`, Mac `/Users/your-username/relic/brain`.
 
-💡 建议把锚点加在配置文件的**开头**，这样 Agent 启动时最先读到。
+💡 We recommend placing the anchor at the **beginning** of your config file, so the agent reads it first.
 
-## 第三步：验证
+## Step 3: Verify
 
-启动 Hermes，问它：
-> "你读了我的 Relic 吗？告诉我我的 AI 叫什么名字、我叫什么名字。"
+Start Hermes and ask it:
+> "Did you read my Relic? Tell me my AI's name and my name."
 
-如果它能回答出来，说明接入成功。
+If it can answer, the integration is successful.
 
-## 日常使用
+## Daily Use
 
-正常使用 Hermes 即可。它每次启动会自动读 Relic。
-对话结束后，提醒 Hermes 把对话记录到 SESSIONS/。
+Use Hermes normally. It will automatically read Relic every session.
+After conversations, remind Hermes to save session logs to SESSIONS/.
 
-## 权限提醒
+## Permission Reminders
 
-- SOUL.md 和 USER.md：Hermes 只能读，不能改
-- MEMORY.md：Hermes 只能在末尾追加
-- SKILLS/ 和 PROJECTS/：Hermes 可以自由读写
+- SOUL.md and USER.md: Hermes can only read, not modify
+- MEMORY.md: Hermes can only append at the end
+- SKILLS/ and PROJECTS/: Hermes can read and write freely
 
-## 注意事项 / Notes
+## Notes
 
 - Hermes's `memories/` folder contains MEMORY.md and USER.md. Conversation logs → SESSIONS/, curated memories → MEMORY.md
