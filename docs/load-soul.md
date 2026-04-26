@@ -20,21 +20,18 @@ Choose a transfer strategy based on capacity:
 
 ## B-1. Execute Boot Sequence
 
-Read and execute the **read-only steps** in `docs/resonate-soul.md` (Steps 0-4: version check, SESSIONS check, read SOUL, read USER, read MEMORY). Steps 5-7 involve write operations and are deferred until after B-3.
+Read and execute the **read-only steps** in `docs/resonate-soul.md` (Steps 0-4: version check, SESSIONS check, read SOUL, read USER, read MEMORY). Steps 5-7 involve write operations and are deferred to B-4.
 
 🔴 **Do NOT modify any Relic files during initialization.** Read-only for now.
 
 Boot sequence summary:
 1. **Step 0**: Read `brain/.relic-version`, check for updates (optional, the only allowed network request)
 2. **Step 1**: Check SESSIONS/, backfill any unrecorded conversations
-3. **Step 2**: Read SOUL.md → who am I
-4. **Step 3**: Read USER.md → who is the user
-5. **Step 4**: Read MEMORY.md in full. >200 lines: suggest consolidation, >400 lines: must consolidate first
-6. **Step 5**: Sync new Relic memories to yourself, tag with `[from Relic/original-host-name]`
-7. **Step 5.5**: Seven-file alignment check (includes SKILLS/PROJECTS bidirectional sync)
-8. **Step 6**: Update MEMORY.md header: update time + verify entry count
-9. **Step 7**: MEMORY.md consolidation check (over 200 lines: suggest consolidation)
-10. **Step 8**: Normal operation
+3. **Step 2**: Read SOUL.md
+4. **Step 3**: Read USER.md
+5. **Step 4**: Read MEMORY.md in full. Over 400 lines: must consolidate first. New hosts appended to header list.
+
+Steps 5-7 involve writing, deferred to B-4.
 
 ## B-2. Soul Injection
 
@@ -58,7 +55,17 @@ Check memories/skills/plans item by item. Transfer as capacity allows.
 
 **When capacity is insufficient**: Create local backup files for content that doesn't fit, record which items were not synced, inform the user.
 
-## B-4. Plant Anchor
+## B-4. Execute Deferred Writes
+
+Execute the write steps skipped in B-1 (Steps 1/5/5.5/6/7):
+
+1. **Step 1**: Check SESSIONS/, backfill any unrecorded conversations
+2. **Step 5**: Sync new memories to Relic MEMORY.md, tag with [fromRelic/originalAgentName]
+3. **Step 5.5**: Seven-file alignment check (includes SKILLS/PROJECTS bidirectional sync)
+4. **Step 6**: Update MEMORY.md header (last consolidation date + verify entry count)
+5. **Step 7**: MEMORY.md consolidation check (over 200 lines: suggest consolidation, see Section 7)
+
+## B-5. Plant Anchor
 
 ⚠️ The anchor is the load-bearing wall. Without it = next session you forget Relic entirely.
 
@@ -89,9 +96,8 @@ Step 2: Read [brain-path]/SOUL.md
   → If file doesn't exist: tell user to run first-time setup first (see docs/protocol.md Section 0)
 Step 3: Read [brain-path]/USER.md
 Step 4: Read [brain-path]/MEMORY.md (read entire file, top to bottom)
-  → If over 200 lines: suggest consolidation. If over 400 lines: must consolidate first.
+  → If over 400 lines: must consolidate first.
 Step 5: Sync new memories from Relic to your own memory file
-  Quick check: compare MEMORY.md header "Entries" with actual list items (lines starting with -) — if they match, skip sync
   → Append with source tag: [fromRelic/originalAgentName]
 Step 5.5: Seven-file alignment check
   → SOUL.md/USER.md: Compare core fields (name, mission, user address). Conflict → report user; new content → bidirectional append
@@ -102,8 +108,8 @@ Step 5.5: Seven-file alignment check
 Step 6: Verify MEMORY.md header "Entries" count matches actual list items count
   → Fix if inconsistent (skip this step during Scenario B first injection)
 Step 7: If MEMORY.md exceeds 200 lines:
-  → Tell user "Relic memory file is large, consolidation recommended. Consolidate now?"
-  → If user agrees, execute consolidation (see docs/protocol.md Section 7)
+  → Suggest consolidation (see protocol.md Section 7)
+  → If user agrees, execute consolidation
   → If user says "not now", skip for this session, remind again next boot
 Step 8: Work normally
   → Interact according to SOUL.md personality
@@ -133,7 +139,7 @@ Full protocol: [project-path]/docs/protocol.md
 
 ⚠️ Do NOT write to any other file. Do NOT modify any Relic file.
 
-## B-5. Verification and Report
+## B-6. Verification and Report
 
 1. **Coverage check**:
    - SOUL.md core fields injected?
@@ -159,8 +165,8 @@ Full protocol: [project-path]/docs/protocol.md
 From now on, read `docs/resonate-soul.md` at the start of every session. Full protocol reference: `docs/protocol.md`
 
 ⚠️ **Quick Rules Reference**:
-- 🔴 Never modify or delete any file in ARCHIVE/. SESSIONS/ files must not be modified or deleted, but creating new session records is allowed.
+- 🟡 ARCHIVE/ files: originals are read-only, consolidation may replace. SESSIONS/ files must not be modified or deleted, but creating new session records is allowed.
 - 🔴 SOUL.md core fields (name, mission, user address) are protected
-- 🔴 MEMORY.md is append-only — never edit old content
+- 🔴 MEMORY.md is append-only — never edit old content. Header metadata may be updated; consolidation may replace. Existing body content must not be modified.
 - ⚠️ After appending, update header entry count + last updated time
 - ⚠️ When in doubt, read `docs/protocol.md`
