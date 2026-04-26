@@ -206,9 +206,8 @@ Step 2: Read [brain-path]/SOUL.md
   → If file doesn't exist: tell user to run first-time setup first (see docs/protocol.md Section 0)
 Step 3: Read [brain-path]/USER.md
 Step 4: Read [brain-path]/MEMORY.md (read entire file, top to bottom)
-  → If over 200 lines: suggest consolidation. If over 400 lines: must consolidate first.
+  → If over 400 lines: must consolidate first.
 Step 5: Sync new memories from Relic to your own memory file
-  Quick check: compare MEMORY.md header "Entries" with actual list items (lines starting with -) — if they match, skip sync
   → Append with source tag: [fromRelic/originalAgentName]
 Step 5.5: Seven-file alignment check
   → SOUL.md/USER.md: Compare core fields (name, mission, user address). Conflict → report user; new content → bidirectional append
