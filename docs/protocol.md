@@ -4,7 +4,7 @@
   Relic Soul Chip
   Author: LucioLiu · https://github.com/LucioLiu/relic
   License: GPL v3
-  Format version: 1.3.1
+  Format version: 1.3.2
   Backup before editing.
 -->
 
@@ -49,10 +49,12 @@ Each agent is both reader and writer — bidirectional sync, grow-only.
 > |------|-----------|----------|
 > | Inventory | Scan your storage first, **then ask user to confirm** | Do not decide import scope yourself |
 > | SOUL | **Copy original text directly**, do not summarize or rewrite | Compressing details = violation |
+> | USER | Fill user preferences and habits as completely as possible | Name-only = violation |
 > | MEMORY | Preference/decision preserve verbatim, experience can condense | Dropping key parameters = violation |
 > | SKILLS | Move all skill files, one folder per skill | No source restriction; platform tools allowed |
 > | SESSIONS | Ask user for old conversation locations, save in full (never summarize) | Current session does NOT count as old |
 > | PROJECTS | Ask user what to transfer for each plan, folder has substantive content | Title + one line only = not acceptable |
+> | Anchor | Show anchor content to user, plant after explicit permission | Planting without permission = violation |
 > | Report | Report all 7 categories item by item, including "0 items" ones | Omitting any category = failure |
 > | Sensitive info | Already in old host = can migrate (tag "verified source"), newly discovered = must ask user |
 
@@ -147,11 +149,11 @@ Core rule: grow-only (G-Set)
 |------|-----------|-------------|
 | `SOUL.md` | 🟡 Enrichable (core protected) | Soul — who am I, core mission, values, style |
 | `USER.md` | 🟡 Enrichable (core protected) | User — who are you, preferences, habits |
-| `MEMORY.md` | 🟡 Append Only | Long-term memory — category-based structured memory (preferences, decisions, experiences, etc.), each entry tagged with host name and importance level |
+| `MEMORY.md` | 🟡 Append Only | Long-term memory — category-based structured memory (preferences, decisions, experiences, etc.), each entry tagged with host name and importance level. Append only. Exception: metadata header (entry count, last consolidated date) may be updated; consolidation flow may replace full file. All existing body content remains immutable. |
 | `SKILLS/*.md` | 🟢 Read/Write | Skills — one folder per skill, any source (user-created, platform tools, etc.) |
 | `PROJECTS/*.md` | 🟢 Read/Write | Plan documents — ongoing or completed plans |
 | `SESSIONS/` | 🟡 Append-Write | Raw conversation logs — may create new files, must not modify or delete existing files |
-| `ARCHIVE/` | 🔴 Read Only | Consolidated archives — never deleted |
+| `ARCHIVE/` | 🟡 Archive Write | Consolidated archives — written only via consolidation, never deleted |
 | `INBOX/` | 🟢 Read/Write | Import buffer |
 
 * SESSIONS has append-write permission: may create new conversation records, but must not modify or delete existing files.
@@ -159,7 +161,7 @@ Core rule: grow-only (G-Set)
 ### Permission Explained
 - 🟡 Enrichable (core protected): May add new habits, preferences, etc., but **must NOT delete or overwrite core fields** (name, core mission, user's preferred name). No need to ask user after modifying (background self-evolution).
 - 🟡 Append Only: Only append to the end, never modify existing content (MEMORY.md); or may only create new files, never modify or delete existing ones (SESSIONS/).
-- 🔴 Read Only: Never modify or delete (ARCHIVE/).
+- 🟡 Archive Write: Written only via consolidation, never delete existing files (ARCHIVE/).
 - 🟢 Read/Write: May add and update.
 
 ### SESSIONS vs ARCHIVE Distinction
@@ -214,12 +216,10 @@ Step 2: Read SOUL.md → Learn who you are, your core mission, your style
 Step 3: Read USER.md → Learn who the user is, their preferences
 
 Step 4: Read MEMORY.md (read entire file, top to bottom)
-  → If over 200 lines: remind user consolidation is recommended (see Section 7)
   → If over 400 lines: must consolidate before continuing
   → Agent Registry section: newly connecting agent should append an entry
 
 Step 5: Sync new memories from Relic to your own memory file
-  Quick check: update "Last consolidated" to current date, check if MEMORY.md header "Entries" matches actual list items (lines starting with `- `) — if same, skip
   Append with source tag: [fromRelic/originalHostName]
 
 Step 5.5: Seven-file alignment check
@@ -227,7 +227,7 @@ Step 5.5: Seven-file alignment check
 
 Step 6: Verify MEMORY.md header "Entries" count matches actual list items (lines starting with `- `); update "Last consolidated" to current date; fix if inconsistent
 
-Step 7: If MEMORY.md exceeds 200 lines, ask user whether to consolidate
+Step 7: If MEMORY.md exceeds 200 lines, suggest consolidation (see Section 7)
 
 Step 8: Normal Operation
   → Skills and plans alignment was already done in Step 5.5
@@ -245,7 +245,7 @@ Extra Rules:
 ## 3. Permission Rules (Iron Law)
 
 ### 🔴 Absolutely Forbidden
-- Never modify or delete anything in ARCHIVE/
+- Never delete anything in ARCHIVE/ (consolidation may write, but never delete)
 - Never modify or delete existing files in SESSIONS/, but may append new conversation records
 - Never modify any file during first connection
 - Never delete or overwrite core fields in SOUL.md / USER.md (name, core mission, user's preferred name)
@@ -418,7 +418,24 @@ Step 1: Inventory — scan yourself first, then ask user to confirm
   ⚠️ Must wait for user confirmation before starting.
   ✅ Completion Check: All 7 categories listed with quantities? User confirmed? Any category skipped? (Skipped = failure)
 
-Step 2: Import memories → MEMORY.md
+Step 2: Import soul → SOUL.md
+  🔴 SOUL.md Fidelity Iron Rule:
+  - If old host has a complete soul definition file, **copy the original text directly** — do NOT summarize or rewrite
+  - Only restructure when old content cannot directly map to template fields
+  - When restructuring, preserve ALL detail descriptions — do NOT compress into summaries
+  - Content that doesn't fit the template goes in "Other" section or file end — **NEVER discard**
+  - Original files MUST be archived to ARCHIVE/raw/ for cross-reference
+  Verify core fields: name, core mission, values, style — all must be filled
+  ✅ Completion Check: Core mission filled? Personality complete? Originals archived?
+
+Step 3: Import user → USER.md
+  - Import user preferences, habits, communication style into USER.md
+  - ⚠️ Must be as complete as possible — do NOT shortcut by only filling the name
+  - If user has profiles from other platforms, ALL must be migrated
+  - Verify core fields: user's preferred name, preferences — all must be filled
+  ✅ Completion Check: User's preferred name filled? Preferences complete?
+
+Step 4: Import memories → MEMORY.md
   ⚠️ Raw source files are the fidelity baseline. Format conversion is refinement, not compression.
   1. Place old agent's memory files into INBOX/
   2. Append to MEMORY.md in Relic format (group by category, each entry with host name and importance)
@@ -428,7 +445,7 @@ Step 2: Import memories → MEMORY.md
   6. After writing, count `- ` list items, update header "Entries" count and "Last consolidated" to current date
   ✅ Completion Check: MEMORY.md entries count matches actual list item count? Last consolidated set.
 
-Step 3: Import skills → SKILLS/
+Step 5: Import skills → SKILLS/
   ⚠️ Format requirement: One folder per skill, with at least one .md description file inside (see Section 5).
   Do NOT write all skills into a single flat file. Correct format:
     SKILLS/debugging-workflow/README.md  ✅
@@ -443,7 +460,7 @@ Step 3: Import skills → SKILLS/
   No content → report "SKILLS/: 0 items (no old data)".
   ✅ Completion check: Does SKILLS/ contain multiple folders? Are there any flat single files (if so, split into folders)?
 
-Step 4: Import conversations → SESSIONS/
+Step 6: Import conversations → SESSIONS/
   ⚠️ Conversations are raw ore — must be preserved in full, never summarized.
   
   Steps:
@@ -460,7 +477,7 @@ Step 4: Import conversations → SESSIONS/
   - Do NOT save summaries as raw records — must be full conversations or verbatim preserved
   ✅ Completion check: Are there historical conversations imported (not just the current session)? Is SESSIONS/ directory created?
 
-Step 5: Import plans → PROJECTS/
+Step 7: Import plans → PROJECTS/
   ⚠️ One folder per plan. Folders must have substantive content, not just a one-line summary.
   
   Steps:
@@ -477,13 +494,20 @@ Step 5: Import plans → PROJECTS/
   No content → report "PROJECTS/: 0 items (no old data)".
   ✅ Completion check: Does each plan folder have substantive content (not just title + one line)? Has the user been asked?
 
-Step 6: Cleanup and Confirmation
+Step 8: Plant anchor
+  Embed the Relic anchor in your core config file (see Section 9 template).
+  Must show anchor content to user and get explicit permission before planting.
+  ⚠️ Anchor ensures next session auto-loads Relic. Without it = next session forgets Relic entirely → no memory sync.
+  If user refuses, record "Anchor not planted" in MEMORY.md and explain consequences.
+  ✅ Completion check: Anchor planted? User confirmed?
+
+Step 9: Cleanup and Confirmation
   1. Fidelity check: original vs converted, warn if compression exceeds 50%
   2. Archive originals: move INBOX/ source files to ARCHIVE/raw/ (never delete)
   3. Update MEMORY.md header "Entries" count and "Last consolidated" to current date
   ✅ Completion check: ARCHIVE/raw/ contains original files?
 
-Step 7: Item-by-item Report (mandatory, no exceptions)
+Step 10: Item-by-item Report (mandatory, no exceptions)
   Must report ALL 7 categories to the user, including those with "0 items". Omitting any category is forbidden.
   Format:
   1. SOUL.md — [status]
@@ -493,7 +517,9 @@ Step 7: Item-by-item Report (mandatory, no exceptions)
   5. PROJECTS/ — [N plans imported]
   6. SESSIONS/ — [N sessions imported]
   7. ARCHIVE/ — [source files archived]
+  8. Anchor — [planted / user refused]
   If a category genuinely has no content to import, report "Category N: 0 items (no old data)" — never omit, never fabricate.
+  ✅ Completion check: All 7 categories in the report? Any fabricated data?
 ```
 
 ### Scenario B: Inject (Relic with Content + Empty Agent)
@@ -502,7 +528,7 @@ Step 7: Item-by-item Report (mandatory, no exceptions)
 B-0. Self-check: Assess your storage capabilities (no need to tell user)
   Choose sync strategy based on capacity: ample → full sync, limited → high-priority, minimal → index only
 
-B-1. Execute boot sequence (Section 2, steps 1-8)
+B-1. Execute boot sequence (Section 2, steps 0-8)
   Do not modify any Relic files during initialization
 
 B-2. Soul Injection
@@ -513,23 +539,82 @@ B-3. Sync Relic content to your own systems
   Memories/skills/plans: check each item, sync as much as you can
   For content that doesn't fit, create local backup file
 
-B-4. Plant Anchor
+B-4. Deferred Writes (see load-soul document)
+  Do not modify any Relic files during first injection
+  Content requiring writes is staged until user confirms
+
+B-5. Plant Anchor
   Embed the Relic anchor in your core config file (see Section 9 template)
   Ensure next new session auto-loads Relic
 
-B-5. Verification and Report
+B-6. Verification and Report
   Coverage check, warn if < 80%. Report full statistics to user.
 ```
 
 Empty Relic + Empty Agent: Ask user — [A] Start fresh [B] Use agent defaults
 
 ### Scenario C: Merge (Both Have Content)
-Three choices:
-  [1] Keep Relic soul (import agent memory only)
-  [2] Keep agent soul (replace Relic soul)
-  [3] Merge — agent generates preview report, user decides key differences
 
-Regardless of choice, skills, conversations, and plans must be imported (per Scenario A).
+```
+C-0. Pre-check — inventory both sides, classify conflicts
+  🔴 Inventory Relic side:
+  - Read SOUL.md, USER.md, MEMORY.md — note core fields and entry counts
+  - List files in SKILLS/, PROJECTS/, SESSIONS/, ARCHIVE/
+  🔴 Inventory agent side:
+  - Scan all your persistent storage (same as Scenario A Step 1)
+  🔴 Classify conflicts:
+  - Soul conflicts: Relic SOUL.md vs agent personality settings differ
+  - User conflicts: Relic USER.md vs agent-recorded user preferences differ
+  - Memory conflicts: Same topic, different content on each side
+  - No conflict: content exists on one side only
+  Show the conflict list to the user, labeling which are soul/user/memory-level differences.
+
+C-1. User chooses merge strategy
+  Present three options:
+  [1] Keep Relic soul (import only agent's memories, skills, conversations, plans)
+  [2] Keep agent soul (replace Relic's SOUL.md and USER.md with agent's settings)
+  [3] Merge — agent generates preview report, user decides key differences item by item
+  ⚠️ Regardless of choice, skills, conversations, and plans must be imported (per Scenario A Steps 5-7).
+  ⚠️ Must wait for user's explicit choice before proceeding.
+
+C-2. Execute soul merge
+  [1] Keep Relic: skip SOUL.md/USER.md changes, proceed directly to C-3
+  [2] Keep agent: write agent's soul settings to SOUL.md, user profile to USER.md
+      Backup original SOUL.md/USER.md to ARCHIVE/raw/
+      ⚠️ Core fields (name, core mission, user's preferred name) must be preserved intact
+  [3] Merge: generate preview report (list all differences), user picks which side to keep per item
+      After user confirms, write results. Backup originals to ARCHIVE/raw/
+
+C-3. Import memories, skills, conversations, plans
+  Execute per Scenario A corresponding steps:
+  - Memories → MEMORY.md (Scenario A Step 4)
+  - Skills → SKILLS/ (Scenario A Step 5)
+  - Conversations → SESSIONS/ (Scenario A Step 6)
+  - Plans → PROJECTS/ (Scenario A Step 7)
+  Skip SOUL.md and USER.md (already handled in C-2).
+
+C-4. Reconcile conflicts — merge mode only
+  Only executed when option [3] Merge was chosen:
+  - For each memory conflict: show "Relic version" vs "Agent version" to user — user picks which to keep (or merge)
+  - Agent-only memories → append to MEMORY.md
+  - Relic-only memories → sync to agent's own storage
+  - Merged memories → append to MEMORY.md, tagged with "[merged]"
+  ⚠️ NEVER delete any memory entry due to conflicts.
+
+C-5. Verification and report
+  Must report:
+  1. Merge strategy: which option was chosen
+  2. Soul/User: result of keep/replace/merge
+  3. Memory: N entries imported (M conflicts resolved)
+  4. Skills: N skills imported
+  5. Conversations: N sessions imported
+  6. Plans: N plans imported
+  7. Archive: originals backed up to ARCHIVE/raw/
+  8. Anchor: planted / user refused
+  ✅ Completion check: All 7 categories in the report? All conflicts resolved?
+```
+
+Empty Relic + Empty Agent: Ask user — [A] Start fresh [B] Use agent defaults
 
 ---
 
@@ -622,9 +707,8 @@ Step 2: Read [brain-path]/SOUL.md
   → If file doesn't exist: tell user to run first-time setup first (see docs/protocol.md Section 0)
 Step 3: Read [brain-path]/USER.md
 Step 4: Read [brain-path]/MEMORY.md (read entire file, top to bottom)
-  → If over 200 lines: suggest consolidation. If over 400 lines: must consolidate first.
+  → If over 400 lines: must consolidate first.
 Step 5: Sync new memories from Relic to your own memory file
-  Quick check: compare MEMORY.md header "Entries" with actual list items (lines starting with -) — if they match, skip sync
   → Append with source tag: [fromRelic/originalAgentName]
 Step 5.5: Seven-file alignment check
   → SOUL.md/USER.md: Compare core fields (name, mission, user address). Conflict → report user; new content → bidirectional append
@@ -635,8 +719,8 @@ Step 5.5: Seven-file alignment check
 Step 6: Verify MEMORY.md header "Entries" count matches actual list items count
   → Fix if inconsistent (skip this step during Scenario B first injection)
 Step 7: If MEMORY.md exceeds 200 lines:
-  → Tell user "Relic memory file is large, consolidation recommended. Consolidate now?"
-  → If user agrees, execute consolidation (see docs/protocol.md Section 7)
+  → Suggest consolidation (see protocol.md Section 7)
+  → If user agrees, execute consolidation
   → If user says "not now", skip for this session, remind again next boot
 Step 8: Work normally
   → Interact according to SOUL.md personality
