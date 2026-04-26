@@ -24,14 +24,14 @@ Read and execute the **read-only steps** in `docs/resonate-soul.md` (Steps 0-4: 
 
 🔴 **Do NOT modify any Relic files during initialization.** Read-only for now.
 
-Boot sequence summary:
+Boot sequence summary (all operations are read-only — no writing):
 1. **Step 0**: Read `brain/.relic-version`, check for updates (optional, the only allowed network request)
-2. **Step 1**: Check SESSIONS/, backfill any unrecorded conversations
+2. **Step 1**: Check SESSIONS/ for unrecorded conversations (inventory only, do not write)
 3. **Step 2**: Read SOUL.md
 4. **Step 3**: Read USER.md
-5. **Step 4**: Read MEMORY.md in full. Over 400 lines: must consolidate first. New hosts appended to header list.
+5. **Step 4**: Read MEMORY.md in full. Over 400 lines: must consolidate first. Remember your host name — appending to the header list is deferred to B-4.
 
-Steps 5-7 involve writing, deferred to B-4.
+Step 1 backfill writing and all Step 5-7 write operations are deferred to B-4.
 
 ## B-2. Soul Injection
 
@@ -60,7 +60,7 @@ Check memories/skills/plans item by item. Transfer as capacity allows.
 Execute the write steps skipped in B-1 (Steps 1/5/5.5/6/7):
 
 1. **Step 1**: Check SESSIONS/, backfill any unrecorded conversations
-2. **Step 5**: Sync new memories to Relic MEMORY.md, tag with [fromRelic/originalAgentName]
+2. **Step 5**: Sync new memories from Relic MEMORY.md to your own memory file, tag with [from Relic/original host name]
 3. **Step 5.5**: Seven-file alignment check (includes SKILLS/PROJECTS bidirectional sync)
 4. **Step 6**: Update MEMORY.md header (last consolidation date + verify entry count)
 5. **Step 7**: MEMORY.md consolidation check (over 200 lines: suggest consolidation, see Section 7)
@@ -165,7 +165,7 @@ Full protocol: [project-path]/docs/protocol.md
 From now on, read `docs/resonate-soul.md` at the start of every session. Full protocol reference: `docs/protocol.md`
 
 ⚠️ **Quick Rules Reference**:
-- 🟡 ARCHIVE/ files: originals are read-only, consolidation may replace. SESSIONS/ files must not be modified or deleted, but creating new session records is allowed.
+- 🟡 ARCHIVE/ files: existing archives are read-only, consolidation may add new archive entries. SESSIONS/ files must not be modified or deleted, but creating new session records is allowed.
 - 🔴 SOUL.md core fields (name, mission, user address) are protected
 - 🔴 MEMORY.md is append-only — never edit old content. Header metadata may be updated; consolidation may replace. Existing body content must not be modified.
 - ⚠️ After appending, update header entry count + last updated time
